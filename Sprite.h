@@ -19,6 +19,8 @@ public:
 
     bool loadTexture(const char* file);
 
+    void setTexture(SDL_Texture *texture);
+
     void render();
 
 protected:
@@ -91,11 +93,15 @@ bool Sprite::loadTexture(const char *file)  {
         return loadTextureSuccess;
     }
 
-    _texture = texture;
+    setTexture(texture);
 
     //delete loadedSurface;
 
     return loadTextureSuccess;
+}
+
+void Sprite::setTexture(SDL_Texture *texture){
+    _texture = texture;
 }
 
 void Sprite::render() {
