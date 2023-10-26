@@ -1,8 +1,10 @@
 #include <SDL.h>
 #include <vector>
+#include <cmath>
 #include "Init.h"
 #include "ACircle2.h"
 #include "Camera.h"
+#include "TestMapGenerator.h"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 640;
@@ -15,7 +17,8 @@ const std::vector<const char*> images = {
         "images/ACircle3.png"
 };
 
-long double CAMERA_SPEED = 0.001;
+const long double CAMERA_SPEED = 0.001, SEED = 0.54455712795763551975;
+
 
 int main(int argc, char *argv[]){
     bool isRunning;
@@ -31,25 +34,52 @@ int main(int argc, char *argv[]){
 
     auto* playerCamera = new Camera(renderer);
 
-    ACircle2 circle2(playerCamera);
 
-    circle2.loadTexture(images[2]);
-
-    circle2.setWorldPosition(0.3, 0.3);
-
-    circle2.setWorldSize(0.2, 0.2);
-
-    auto circle3 = ACircle2(playerCamera);
-
-    circle3.loadTexture(images[2]);
-
-    circle3.setWorldPosition(0.5, 0.5);
-
-    circle3.setWorldSize(0.1, 0.1);
-
-    circle3.setRotationCenter(-1, -1);
 
     if(initSuccess){
+
+        ACircle2 circle2(playerCamera);
+
+        circle2.loadTexture(images[2]);
+
+        circle2.setWorldPosition(0.3, 0.3);
+
+        circle2.setWorldSize(0.2, 0.2);
+
+        auto circle3 = ACircle2(playerCamera);
+
+        circle3.loadTexture(images[2]);
+
+        circle3.setWorldPosition(0.5, 0.5);
+
+        circle3.setWorldSize(0.1, 0.1);
+
+        circle3.setRotationCenter(-1, -1);
+
+        int mouseX, mouseY;
+
+        SDL_GetGlobalMouseState(&mouseX, &mouseY);
+
+        auto seed = SEED * mouseX / 1000;
+
+        seed *= 14287547854223;
+        seed /= 778472857548;
+
+        seed -= seed - static_cast<uint64_t>(seed);
+
+        TestMapGenerator generator = TestMapGenerator(playerCamera, seed);
+
+        SDL_Texture* mapTexture;
+
+        generator.generateMap(mapTexture, 100, 100);
+
+        WorldSprite map = WorldSprite(playerCamera);
+
+        map.setTexture(mapTexture);
+
+        map.setWorldPosition(0, 0);
+
+        map.setWorldSize(0.5, 0.5);
 
         isRunning = true;
 
@@ -86,6 +116,8 @@ int main(int argc, char *argv[]){
             circle2.render();
 
             circle3.render();
+
+            map.render();
 
             SDL_RenderPresent(renderer);
 

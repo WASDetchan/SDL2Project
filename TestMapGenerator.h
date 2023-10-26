@@ -16,48 +16,71 @@ public:
 
     void setSeed(long double seed);
 
-    void generateMap(SDL_Texture *&texture, int32_t w, int32_t h) const;
+    void generateMap(SDL_Texture *&texture, int32_t w, int32_t h);
+
+    void generateRoad(SDL_Surface *map, int32_t w, int32_t h);
 
 private:
-    long double _seed;
+    long double _seed, _last;
+
+    Camera* _playerCamera;
 
     static long double generateNext(long double a);
 };
 
 TestMapGenerator::TestMapGenerator(Camera* playerCamera) {
     _seed = 0;
+    _last = 0;
+    _playerCamera = playerCamera;
 }
 
 TestMapGenerator::TestMapGenerator(Camera* playerCamera, long double seed) {
     _seed = seed;
+    _last = seed;
+    _playerCamera = playerCamera;
 }
 
 void TestMapGenerator::setSeed(long double seed) {
     _seed = seed;
+    _last = seed;
 }
 
-void TestMapGenerator::generateMap(SDL_Texture *&texture, int32_t w, int32_t h) const {
+void TestMapGenerator::generateRoad(SDL_Surface *map, int32_t w, int32_t h) {
+    int32_t x = 0, y = 0;
+
+    long double a = _last, xChangeChance = static_cast<long double>(w) / (h + w);
+
+    auto color = SDL_MapRGB(map->format, 0, 255, 0);
+
+    SDL_Rect pixel = SDL_Rect({x, y, 1, 1});
+    SDL_FillRect(map, &pixel, color);
+
+    while(x < w - 1 || y < h - 1){
+        a = generateNext(a);
+        if((a <= xChangeChance || y >= h - 1) && x < w - 1){
+            x++;
+        }
+        if((a > xChangeChance || x >= w - 1) && y < h - 1){
+            y++;
+        }
+
+        pixel = SDL_Rect({x, y, 1, 1});
+        SDL_FillRect(map, &pixel, color);
+    }
+
+    _last = a;
+}
+
+void TestMapGenerator::generateMap(SDL_Texture *&texture, int32_t w, int32_t h) {
     SDL_Surface* map = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
 
     SDL_FillRect(map, nullptr, SDL_MapRGB(map->format, 255, 0, 0));
 
-    int32_t x = 0, y = 0;
+    generateRoad(map, w, h);
+    generateRoad(map, w, h);
+    generateRoad(map, w, h);
 
-    long double a = _seed, xChangeChance = static_cast<long double>(w) / (h + w);
-
-    auto color = SDL_MapRGB(map->format, 0, 255, 0);
-
-    while(x < w || y < h){
-        SDL_Rect pixel = SDL_Rect({x, y, 1, 1});
-        SDL_FillRect(map, &pixel, color);
-        a = generateNext(a);
-        if(a <= xChangeChance || y >= h){
-            x++;
-        }
-        if(a > xChangeChance || x >= w){
-            y++;
-        }
-    }
+    texture = SDL_CreateTextureFromSurface(_playerCamera->getRenderer(), map);
 }
 
 long double TestMapGenerator::generateNext(long double a) {
