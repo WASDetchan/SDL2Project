@@ -9,7 +9,7 @@
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 640;
 const int IMG_FLAGS = IMG_INIT_PNG;
-const int RENDERER_FLAGS = SDL_RENDERER_ACCELERATED  | SDL_RENDERER_PRESENTVSYNC;
+const int RENDERER_FLAGS = SDL_RENDERER_ACCELERATED /* | SDL_RENDERER_PRESENTVSYNC*/;
 
 const std::vector<const char*> images = {
         "images/ACircle.png",
@@ -25,6 +25,9 @@ int main(int argc, char *argv[]){
 
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
+
+    //SDL_SetHint(SDL_HINT_RENDER_DRIVER, "direct3d12");
+
 
     std::vector<SDL_Texture*> textures;
 
@@ -69,6 +72,8 @@ int main(int argc, char *argv[]){
 
         TestMapGenerator generator = TestMapGenerator(playerCamera, seed);
 
+        generator.testGenerator();
+
         SDL_Texture* mapTexture;
 
         generator.generateMap(mapTexture, 100, 100);
@@ -89,14 +94,16 @@ int main(int argc, char *argv[]){
 
         bool wPressed = false, sPressed = false, aPressed = false, dPressed = false;
 
+        long double deltaX = 0, deltaY = 0;
+
         while(isRunning){
             cameraMoveMultiplierX = static_cast<int64_t>(dPressed) - static_cast<int64_t>(aPressed);
 
             cameraMoveMultiplierY = static_cast<int64_t>(sPressed) - static_cast<int64_t>(wPressed);
 
-            long double deltaX = static_cast<long double>(playerCamera->getFrameTime() - playerCamera->getPreviousFrameTime()) *
-                                 CAMERA_SPEED * cameraMoveMultiplierX,
-                        deltaY = static_cast<long double>(playerCamera->getFrameTime() - playerCamera->getPreviousFrameTime()) *
+            deltaX = static_cast<long double>(playerCamera->getFrameTime() - playerCamera->getPreviousFrameTime()) *
+                                 CAMERA_SPEED * cameraMoveMultiplierX;
+            deltaY = static_cast<long double>(playerCamera->getFrameTime() - playerCamera->getPreviousFrameTime()) *
                                           CAMERA_SPEED * cameraMoveMultiplierY;
 
             playerCamera->moveX(deltaX);
