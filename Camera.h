@@ -24,6 +24,8 @@ public:
 
     void setZoom(long double zoom);
 
+    void changeZoom(long double deltaZoom);
+
 
     [[nodiscard]] long double getX() const;
 
@@ -80,6 +82,14 @@ void Camera::setZoom(long double zoom) {
     _zoom = zoom;
 }
 
+void Camera::changeZoom(long double deltaZoom) {
+    if((deltaZoom > 0 && _zoom < 10) ||
+            (deltaZoom < 0 && _zoom > 0.1)){
+        _zoom += deltaZoom;
+        std::cerr << _zoom << std::endl;
+    }
+}
+
 
 long double Camera::getX() const {
     return _x;
@@ -117,5 +127,6 @@ void Camera::updateFrameTime(uint64_t frameTime) {
     _previousFrameTime = _frameTime;
     _frameTime = frameTime;
 }
+
 
 #endif //CMAKE_INSTALL_CMAKE_CAMERA_H

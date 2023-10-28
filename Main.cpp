@@ -17,7 +17,7 @@ const std::vector<const char*> images = {
         "images/ACircle3.png"
 };
 
-const long double CAMERA_SPEED = 0.001, SEED = 0.54455712795763551975;
+const long double CAMERA_SPEED = 0.001, SEED = 0.54455712795763551975, WHEEL_SENSITIVITY = 0.1;
 
 
 int main(int argc, char *argv[]){
@@ -72,7 +72,7 @@ int main(int argc, char *argv[]){
 
         TestMapGenerator generator = TestMapGenerator(playerCamera, seed);
 
-        generator.testGenerator();
+        //generator.testGenerator();
 
         SDL_Texture* mapTexture;
 
@@ -82,7 +82,7 @@ int main(int argc, char *argv[]){
 
         map.setTexture(mapTexture);
 
-        map.setWorldPosition(0, 0);
+        map.setWorldPosition(0.5, 0.5);
 
         map.setWorldSize(0.5, 0.5);
 
@@ -111,12 +111,6 @@ int main(int argc, char *argv[]){
             playerCamera->moveY(deltaY);
 
             playerCamera->updateFrameTime(SDL_GetTicks64());
-
-            circle3.setWorldPosition(0.5, 0.5);
-
-            circle3.setWorldSize(0.1, 0.1);
-
-            circle3.setRotationCenter(-1, -1);
 
             SDL_RenderClear(renderer);
 
@@ -163,6 +157,10 @@ int main(int argc, char *argv[]){
                             dPressed = false;
                             break;
                     }
+                }
+                if(event.type == SDL_MOUSEWHEEL){
+                    int32_t y = event.wheel.y;
+                    playerCamera->changeZoom(y * WHEEL_SENSITIVITY);
                 }
             }
         }

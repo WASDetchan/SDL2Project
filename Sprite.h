@@ -130,7 +130,6 @@ void Sprite::render() {
                      static_cast<double>(angle), centre, flip);
     delete sourceRect;
     delete destinationRect;
-    delete centre;
 }
 
 void Sprite::getDestinationRect(SDL_Rect *&destinationRect) {

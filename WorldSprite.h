@@ -35,11 +35,11 @@ void WorldSprite::setWorldSize(long double w, long double h) {
 }
 
 void WorldSprite::getDestinationRect(SDL_Rect *&destinationRect) {
-    long double screenX = _worldX - _playerCamera->getX(),
-    screenY = _worldY - _playerCamera->getY(),
+    long double screenX = _worldX - _playerCamera->getX() + _playerCamera->getZoom(),
+    screenY = _worldY - _playerCamera->getY() + _playerCamera->getZoom(),
     screenWidth = _worldWidth,
     screenHeight = _worldHeight,
-    screenMultiplier = _playerCamera->getScreenMultiplier();
+    screenMultiplier = _playerCamera->getScreenMultiplier() * _playerCamera->getZoom();
 
 
     destinationRect = new SDL_Rect({static_cast<int>(screenX * screenMultiplier),
