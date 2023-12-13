@@ -6,6 +6,7 @@
 #define CMAKE_INSTALL_CMAKE_TESTMAPGENERATOR_H
 
 #include <SDL.h>
+#include <cmath>
 #include "Camera.h"
 
 class TestMapGenerator{
@@ -112,6 +113,8 @@ void TestMapGenerator::generateMap(SDL_Texture *&texture, int32_t w, int32_t h) 
     int32_t x1 = 0;
     int32_t y1 = 0;
 
+    std::cerr << a << std::endl;
+
     for(int stop = 0; stop < stops; stop++){
         x1 = static_cast<int32_t>(generateNext(a) * w);
 
@@ -131,8 +134,6 @@ void TestMapGenerator::generateMap(SDL_Texture *&texture, int32_t w, int32_t h) 
         x0 = x1;
         y0 = y1;
     }
-
-
 
     generateRoad(map, x1, y1, w - 1, h - 1);
 

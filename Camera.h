@@ -27,13 +27,25 @@ public:
     void changeZoom(long double deltaZoom);
 
 
-    [[nodiscard]] long double getX() const;
+    [[nodiscard]] long double getCornerX() const;
 
-    [[nodiscard]] long double getY() const;
+    [[nodiscard]] long double getCornerY() const;
+
+    [[nodiscard]] long double getCentreX() const;
+
+    [[nodiscard]] long double getCentreY() const;
 
     [[nodiscard]] long double getZoom() const;
 
-    [[nodiscard]] long double getScreenMultiplier() const;
+    [[nodiscard]] long double getPixelsPerUnit() const;
+
+    [[nodiscard]] long double getScreenMultiplierX() const;
+
+    [[nodiscard]] long double getScreenMultiplierY() const;
+
+    [[nodiscard]] long double calculateScreenPositionX(long double worldPositionX) const;
+
+    [[nodiscard]] long double calculateScreenPositionY(long double worldPositionY) const;
 
     [[nodiscard]] uint64_t getFrameTime() const;
 
@@ -42,7 +54,7 @@ public:
     void updateFrameTime(uint64_t frameTime);
 
 private:
-    long double _x, _y, _zoom, _screenMultiplier;
+    long double _x, _y, _zoom, _pixelsPerUnit,  _screenMultiplierX, _screenMultiplierY;
 
     uint64_t _frameTime, _previousFrameTime;
 
@@ -56,7 +68,9 @@ Camera::Camera(SDL_Renderer* renderer) {
     SDL_GetRendererOutputSize(_renderer, &windowWidth, &windowHeight);
     minWindowDimension = std::min(windowWidth, windowHeight);
 
-    _screenMultiplier = minWindowDimension;
+    _pixelsPerUnit = minWindowDimension;
+    _screenMultiplierX = static_cast<long double>(windowWidth) / minWindowDimension;
+    _screenMultiplierY = static_cast<long double>(windowHeight) / minWindowDimension;
 
     _x = 0;
     _y = 0;
@@ -86,16 +100,23 @@ void Camera::changeZoom(long double deltaZoom) {
     if((deltaZoom > 0 && _zoom < 10) ||
             (deltaZoom < 0 && _zoom > 0.1)){
         _zoom += deltaZoom;
-        std::cerr << _zoom << std::endl;
     }
 }
 
 
-long double Camera::getX() const {
+long double Camera::getCornerX() const {
+    return _x - 0.5 * getScreenMultiplierX() / getZoom();
+}
+
+long double Camera::getCornerY() const {
+    return _y - 0.5 * getScreenMultiplierY() / getZoom();
+}
+
+long double Camera::getCentreX() const {
     return _x;
 }
 
-long double Camera::getY() const {
+long double Camera::getCentreY() const {
     return _y;
 }
 
@@ -111,8 +132,24 @@ long double Camera::getZoom() const {
     return _zoom;
 }
 
-long double Camera::getScreenMultiplier() const {
-    return _screenMultiplier;
+long double Camera::getPixelsPerUnit() const {
+    return _pixelsPerUnit;
+}
+
+long double Camera::getScreenMultiplierX() const {
+    return _screenMultiplierX;
+}
+
+long double Camera::getScreenMultiplierY() const {
+    return _screenMultiplierY;
+}
+
+long double Camera::calculateScreenPositionX(long double worldPositionX) const {
+    return (worldPositionX - getCentreX())  * getZoom() + 0.5 * getScreenMultiplierX();
+}
+
+long double Camera::calculateScreenPositionY(long double worldPositionY) const {
+    return (worldPositionY - getCentreY())  * getZoom() + 0.5 * getScreenMultiplierY();
 }
 
 uint64_t Camera::getFrameTime() const {

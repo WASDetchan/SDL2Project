@@ -6,8 +6,8 @@
 #include "Camera.h"
 #include "TestMapGenerator.h"
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 640;
+const int SCREEN_WIDTH = 1280;
+const int SCREEN_HEIGHT = 720;
 const int IMG_FLAGS = IMG_INIT_PNG;
 const int RENDERER_FLAGS = SDL_RENDERER_ACCELERATED /* | SDL_RENDERER_PRESENTVSYNC*/;
 
@@ -55,9 +55,11 @@ int main(int argc, char *argv[]){
 
         circle3.setWorldPosition(0.5, 0.5);
 
+        //circle3.rotate = true;
+
         circle3.setWorldSize(0.1, 0.1);
 
-        circle3.setRotationCenter(-1, -1);
+        //circle3.setWorldRotationCentre(-1, -1);
 
         int mouseX, mouseY;
 
@@ -69,6 +71,8 @@ int main(int argc, char *argv[]){
         seed /= 778472857548;
 
         seed -= seed - static_cast<uint64_t>(seed);
+
+        seed = SEED;
 
         TestMapGenerator generator = TestMapGenerator(playerCamera, seed);
 
@@ -82,7 +86,7 @@ int main(int argc, char *argv[]){
 
         map.setTexture(mapTexture);
 
-        map.setWorldPosition(0.5, 0.5);
+        map.setWorldPosition(0.5, 0.8);
 
         map.setWorldSize(0.5, 0.5);
 
@@ -102,9 +106,9 @@ int main(int argc, char *argv[]){
             cameraMoveMultiplierY = static_cast<int64_t>(sPressed) - static_cast<int64_t>(wPressed);
 
             deltaX = static_cast<long double>(playerCamera->getFrameTime() - playerCamera->getPreviousFrameTime()) *
-                                 CAMERA_SPEED * cameraMoveMultiplierX;
+                                 CAMERA_SPEED * cameraMoveMultiplierX / playerCamera->getZoom();
             deltaY = static_cast<long double>(playerCamera->getFrameTime() - playerCamera->getPreviousFrameTime()) *
-                                          CAMERA_SPEED * cameraMoveMultiplierY;
+                                          CAMERA_SPEED * cameraMoveMultiplierY / playerCamera->getZoom();
 
             playerCamera->moveX(deltaX);
 
