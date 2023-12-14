@@ -1,9 +1,5 @@
-//
-// Created by yarik on 26.10.2023.
-//
-
-#ifndef CMAKE_INSTALL_CMAKE_TESTMAPGENERATOR_H
-#define CMAKE_INSTALL_CMAKE_TESTMAPGENERATOR_H
+#ifndef SDL2TEST_TESTMAPGENERATOR_H
+#define SDL2TEST_TESTMAPGENERATOR_H
 
 #include <SDL.h>
 #include <cmath>
@@ -162,4 +158,4 @@ void TestMapGenerator::testGenerator() const {
 }
 
 
-#endif //CMAKE_INSTALL_CMAKE_TESTMAPGENERATOR_H
+#endif //SDL2TEST_TESTMAPGENERATOR_H

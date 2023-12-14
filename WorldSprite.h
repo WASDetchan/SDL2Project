@@ -1,9 +1,5 @@
-//
-// Created by yarik on 18.10.2023.
-//
-
-#ifndef CMAKE_INSTALL_CMAKE_WORLDSPRITE_H
-#define CMAKE_INSTALL_CMAKE_WORLDSPRITE_H
+#ifndef SDL2TEST_WORLDSPRITE_H
+#define SDL2TEST_WORLDSPRITE_H
 
 #include "Sprite.h"
 
@@ -114,4 +110,4 @@ void WorldSprite::getWorldRotationCentre(long double *x, long double *y) const {
 
 
 
-#endif //CMAKE_INSTALL_CMAKE_WORLDSPRITE_H
+#endif //SDL2TEST_WORLDSPRITE_H

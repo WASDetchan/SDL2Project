@@ -1,9 +1,5 @@
-//
-// Created by yarik on 26.08.2023.
-//
-
-#ifndef SDL2TEST_SPRITEBASE_H
-#define SDL2TEST_SPRITEBASE_H
+#ifndef SDL2TEST_SPRITE_H
+#define SDL2TEST_SPRITE_H
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -168,4 +164,4 @@ void Sprite::getBlendMode(SDL_BlendMode *blendMode) {
 }
 
 
-#endif //SDL2TEST_SPRITEBASE_H
+#endif //SDL2TEST_SPRITE_H

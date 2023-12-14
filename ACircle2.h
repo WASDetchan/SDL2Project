@@ -1,9 +1,5 @@
-//
-// Created by yarik on 21.10.2023.
-//
-
-#ifndef CMAKE_INSTALL_CMAKE_ACIRCLE2_H
-#define CMAKE_INSTALL_CMAKE_ACIRCLE2_H
+#ifndef SDL2TEST_ACIRCLE2_H
+#define SDL2TEST_ACIRCLE2_H
 
 #include "WorldSprite.h"
 
@@ -73,4 +69,4 @@ void ACircle2::getRotationAngle(long double *angle) {
     *angle = tick / 3000 * 360;
 }
 
-#endif //CMAKE_INSTALL_CMAKE_ACIRCLE2_H
+#endif //SDL2TEST_ACIRCLE2_H

@@ -1,12 +1,9 @@
-//
-// Created by yarik on 18.10.2023.
-//
-
-#ifndef CMAKE_INSTALL_CMAKE_CAMERA_H
-#define CMAKE_INSTALL_CMAKE_CAMERA_H
+#ifndef SDL2TEST_CAMERA_H
+#define SDL2TEST_CAMERA_H
 
 #include <SDL.h>
 #include <algorithm>
+#include <vector>
 
 class Camera{
 public:
@@ -166,4 +163,4 @@ void Camera::updateFrameTime(uint64_t frameTime) {
 }
 
 
-#endif //CMAKE_INSTALL_CMAKE_CAMERA_H
+#endif //SDL2TEST_CAMERA_H

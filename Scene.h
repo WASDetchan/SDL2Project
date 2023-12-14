@@ -1,0 +1,4 @@
+#ifndef SDL2TEST_SCENE_H
+#define SDL2TEST_SCENE_H
+
+#endif //SDL2TEST_SCENE_H
