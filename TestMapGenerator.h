@@ -17,7 +17,7 @@ public:
 
     void generateRoad(SDL_Surface *map, int32_t x0, int32_t y0, int32_t x1, int32_t y1);
 
-    void testGenerator() const;
+    void testGenerator();
 
 private:
     long double _seed, _last;
@@ -25,6 +25,8 @@ private:
     Camera* _playerCamera;
 
     static long double generateNext(long double a);
+
+    long double getNext();
 };
 
 TestMapGenerator::TestMapGenerator(Camera* playerCamera) {
@@ -45,8 +47,6 @@ void TestMapGenerator::setSeed(long double seed) {
 }
 
 void TestMapGenerator::generateRoad(SDL_Surface *map, int32_t x0, int32_t y0, int32_t x1, int32_t y1) {
-    std::cerr << x0 << ' ' << y0 << " -> ";
-    std::cerr << x1 << ' ' << y1 << std::endl;
 
     int32_t deltaX = abs(x1 - x0);
     int32_t deltaY = abs(y1 - y0);
@@ -62,7 +62,7 @@ void TestMapGenerator::generateRoad(SDL_Surface *map, int32_t x0, int32_t y0, in
 
 
     for(int step = 0; step < steps; step++){
-        route[step].first = generateNext(sin(static_cast<double>(step * _seed)));
+        route[step].first = getNext();
     }
     std::stable_sort(route.begin(), route.end());
 
@@ -89,8 +89,6 @@ void TestMapGenerator::generateRoad(SDL_Surface *map, int32_t x0, int32_t y0, in
     SDL_Rect pixel = SDL_Rect({x, y, 1, 1});
 
     SDL_FillRect(map, &pixel, color);
-
-    _seed = generateNext(_seed);
 }
 
 void TestMapGenerator::generateMap(SDL_Texture *&texture, int32_t w, int32_t h) {
@@ -98,27 +96,17 @@ void TestMapGenerator::generateMap(SDL_Texture *&texture, int32_t w, int32_t h) 
 
     SDL_FillRect(map, nullptr, SDL_MapRGB(map->format, 255, 0, 0));
 
-    long double a = generateNext(_seed);
-
-    auto stops = static_cast<int32_t>(generateNext(a) * 6);
-
-    a = generateNext(a);
+    auto stops = static_cast<int32_t>(getNext() * 6);
 
     int32_t x0 = 0;
     int32_t y0 = 0;
     int32_t x1 = 0;
     int32_t y1 = 0;
 
-    std::cerr << a << std::endl;
-
     for(int stop = 0; stop < stops; stop++){
-        x1 = static_cast<int32_t>(generateNext(a) * w);
+        x1 = static_cast<int32_t>(getNext() * w);
 
-        a = generateNext(a);
-
-        y1 = static_cast<int32_t>(generateNext(a) * h);
-
-        a = generateNext(a);
+        y1 = static_cast<int32_t>(getNext() * h);
 
         if(x0 == x1 || y0 == y1){
             std::cerr << "SAME\n";
@@ -133,28 +121,34 @@ void TestMapGenerator::generateMap(SDL_Texture *&texture, int32_t w, int32_t h) 
 
     generateRoad(map, x1, y1, w - 1, h - 1);
 
-    _seed = generateNext(a);
-
     texture = SDL_CreateTextureFromSurface(_playerCamera->getRenderer(), map);
 }
 
 long double TestMapGenerator::generateNext(long double a) {
+    a += 2351;
     a *= 1125899839733759;
     a /= 274876858367;
-    return a - static_cast<int64_t>(a);
+    auto x = a - static_cast<int64_t>(a);
+    std::cerr << x << std::endl;
+    return x;
 }
 
-void TestMapGenerator::testGenerator() const {
-    auto a = generateNext(_seed);
+void TestMapGenerator::testGenerator() {
+    auto a = getNext();
     int m[10] = {};
     const int n = 10000;
     for(int i = 0; i < n; i++){
         m[static_cast<int>(a*10)]++;
-        a = generateNext(a);
+        a = getNext();
     }
     for(auto i : m){
         std::cout << static_cast<long double>(i) / n << std::endl;
     }
+}
+
+long double TestMapGenerator::getNext() {
+    _last = generateNext(_last);
+    return _last;
 }
 
 
