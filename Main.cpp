@@ -5,6 +5,7 @@
 #include "ACircle2.h"
 #include "Camera.h"
 #include "TestMapGenerator.h"
+#include "Scene.h"
 
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 720;
@@ -19,6 +20,120 @@ const std::vector<const char*> images = {
 
 const long double CAMERA_SPEED = 0.001, SEED = 0.54455712795763551975, WHEEL_SENSITIVITY = 0.1;
 
+WorldSprite gen1(Camera* playerCamera){
+    auto seed = SEED;
+
+    seed *= 53498874654978542231684477.0L;
+    seed /= 54978542231684316847.0L;
+
+    seed -= static_cast<uint64_t>(seed);
+
+    TestMapGenerator generator = TestMapGenerator(playerCamera, seed);
+
+    SDL_Texture* mapTexture;
+
+    generator.generateMap(mapTexture, 100, 100);
+
+    WorldSprite map = WorldSprite(playerCamera);
+
+    map.setTexture(mapTexture);
+
+    map.setWorldPosition(0.5, 0.8);
+
+    map.setWorldSize(0.5, 0.5);
+
+    return map;
+}
+
+void gen2(WorldSprite* &map, Camera* playerCamera){
+    auto seed = SEED;
+
+    seed *= 14287547854223;
+    seed /= 778472857548;
+
+    seed -= static_cast<uint64_t>(seed);
+
+    TestMapGenerator generator = TestMapGenerator(playerCamera, seed);
+
+    SDL_Texture* mapTexture;
+
+    generator.generateMap(mapTexture, 100, 100);
+
+    map = new WorldSprite(playerCamera);
+
+    map->setTexture(mapTexture);
+
+    map->setWorldPosition(0.5, 0.8);
+
+    map->setWorldSize(0.5, 0.5);
+}
+
+void moveCamera(Camera* playerCamera, bool wPressed, bool sPressed, bool aPressed, bool dPressed){
+    int64_t cameraMoveMultiplierX = 0, cameraMoveMultiplierY = 0;
+
+    long double deltaX = 0, deltaY = 0;
+
+    cameraMoveMultiplierX = static_cast<int64_t>(dPressed) - static_cast<int64_t>(aPressed);
+
+    cameraMoveMultiplierY = static_cast<int64_t>(sPressed) - static_cast<int64_t>(wPressed);
+
+    deltaX = static_cast<long double>(playerCamera->getFrameTime() - playerCamera->getPreviousFrameTime()) *
+             CAMERA_SPEED * cameraMoveMultiplierX / playerCamera->getZoom();
+    deltaY = static_cast<long double>(playerCamera->getFrameTime() - playerCamera->getPreviousFrameTime()) *
+             CAMERA_SPEED * cameraMoveMultiplierY / playerCamera->getZoom();
+
+    playerCamera->moveX(deltaX);
+
+    playerCamera->moveY(deltaY);
+
+    playerCamera->updateFrameTime(SDL_GetTicks64());
+}
+
+void eventCheck(Camera* playerCamera, bool &isRunning, bool &wPressed, bool &sPressed, bool &aPressed, bool &dPressed){
+    static SDL_Event event;
+
+    while(SDL_PollEvent(&event)){
+        if(event.type == SDL_QUIT) {
+            isRunning = false;
+        }
+        if(event.type == SDL_KEYDOWN){
+            switch (event.key.keysym.sym){
+                case SDLK_w:
+                    wPressed = true;
+                    break;
+                case SDLK_s:
+                    sPressed = true;
+                    break;
+                case SDLK_a:
+                    aPressed = true;
+                    break;
+                case SDLK_d:
+                    dPressed = true;
+                    break;
+            }
+        }
+        if(event.type == SDL_KEYUP){
+            switch (event.key.keysym.sym){
+                case SDLK_w:
+                    wPressed = false;
+                    break;
+                case SDLK_s:
+                    sPressed = false;
+                    break;
+                case SDLK_a:
+                    aPressed = false;
+                    break;
+                case SDLK_d:
+                    dPressed = false;
+                    break;
+            }
+        }
+        if(event.type == SDL_MOUSEWHEEL){
+            int32_t y = event.wheel.y;
+            playerCamera->changeZoom(y * WHEEL_SENSITIVITY);
+        }
+    }
+}
 
 int main(int argc, char *argv[]){
     bool isRunning;
@@ -35,13 +150,15 @@ int main(int argc, char *argv[]){
             initImage(IMG_FLAGS) &&
             initRendered(renderer, window, RENDERER_FLAGS);
 
-    auto* playerCamera = new Camera(renderer);
-
-
 
     if(initSuccess){
+        auto* playerCamera = new Camera(renderer);
+
+        Scene mainScene = Scene(playerCamera);
 
         ACircle2 circle2(playerCamera);
+
+        mainScene.addSprite(&circle2);
 
         circle2.loadTexture(images[2]);
 
@@ -51,122 +168,39 @@ int main(int argc, char *argv[]){
 
         auto circle3 = ACircle2(playerCamera);
 
+        mainScene.addSprite(&circle3);
+
         circle3.loadTexture(images[2]);
 
         circle3.setWorldPosition(0.5, 0.5);
 
-        //circle3.rotate = true;
 
         circle3.setWorldSize(0.1, 0.1);
 
-        //circle3.setWorldRotationCentre(-1, -1);
+        WorldSprite map1 = gen1(playerCamera);
 
-        int mouseX, mouseY;
+        WorldSprite* map2;
 
-        SDL_GetGlobalMouseState(&mouseX, &mouseY);
+        mainScene.addSprite(&map1);
 
-        auto seed = SEED * mouseX / 1000;
+        gen2(map2, playerCamera);
 
-        seed *= 14287547854223;
-        seed /= 778472857548;
-
-        seed -= seed - static_cast<uint64_t>(seed);
-
-        seed = SEED;
-
-        TestMapGenerator generator = TestMapGenerator(playerCamera, seed);
-
-        //generator.testGenerator();
-
-        SDL_Texture* mapTexture;
-
-        generator.generateMap(mapTexture, 100, 100);
-
-        WorldSprite map = WorldSprite(playerCamera);
-
-        map.setTexture(mapTexture);
-
-        map.setWorldPosition(0.5, 0.8);
-
-        map.setWorldSize(0.5, 0.5);
+        mainScene.addSprite(map2);
 
         isRunning = true;
 
-        SDL_Event event;
-
-        int64_t cameraMoveMultiplierX = 0, cameraMoveMultiplierY = 0;
-
         bool wPressed = false, sPressed = false, aPressed = false, dPressed = false;
 
-        long double deltaX = 0, deltaY = 0;
-
-        while(isRunning){
-            cameraMoveMultiplierX = static_cast<int64_t>(dPressed) - static_cast<int64_t>(aPressed);
-
-            cameraMoveMultiplierY = static_cast<int64_t>(sPressed) - static_cast<int64_t>(wPressed);
-
-            deltaX = static_cast<long double>(playerCamera->getFrameTime() - playerCamera->getPreviousFrameTime()) *
-                                 CAMERA_SPEED * cameraMoveMultiplierX / playerCamera->getZoom();
-            deltaY = static_cast<long double>(playerCamera->getFrameTime() - playerCamera->getPreviousFrameTime()) *
-                                          CAMERA_SPEED * cameraMoveMultiplierY / playerCamera->getZoom();
-
-            playerCamera->moveX(deltaX);
-
-            playerCamera->moveY(deltaY);
-
-            playerCamera->updateFrameTime(SDL_GetTicks64());
+        while(isRunning) {
+            moveCamera(playerCamera, wPressed, sPressed, aPressed, dPressed);
 
             SDL_RenderClear(renderer);
 
-            circle2.render();
-
-            circle3.render();
-
-            map.render();
+            mainScene.renderAll();
 
             SDL_RenderPresent(renderer);
 
-            while(SDL_PollEvent(&event)){
-                if(event.type == SDL_QUIT) {
-                    isRunning = false;
-                }
-                if(event.type == SDL_KEYDOWN){
-                    switch (event.key.keysym.sym){
-                        case SDLK_w:
-                            wPressed = true;
-                            break;
-                        case SDLK_s:
-                            sPressed = true;
-                            break;
-                        case SDLK_a:
-                            aPressed = true;
-                            break;
-                        case SDLK_d:
-                            dPressed = true;
-                            break;
-                    }
-                }
-                if(event.type == SDL_KEYUP){
-                    switch (event.key.keysym.sym){
-                        case SDLK_w:
-                            wPressed = false;
-                            break;
-                        case SDLK_s:
-                            sPressed = false;
-                            break;
-                        case SDLK_a:
-                            aPressed = false;
-                            break;
-                        case SDLK_d:
-                            dPressed = false;
-                            break;
-                    }
-                }
-                if(event.type == SDL_MOUSEWHEEL){
-                    int32_t y = event.wheel.y;
-                    playerCamera->changeZoom(y * WHEEL_SENSITIVITY);
-                }
-            }
+            eventCheck(playerCamera, isRunning, wPressed, sPressed, aPressed, dPressed);
         }
     }
 
