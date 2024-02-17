@@ -129,7 +129,7 @@ long double TestMapGenerator::generateNext(long double a) {
     a *= 1125899839733759;
     a /= 274876858367;
     auto x = a - static_cast<int64_t>(a);
-    std::cerr << x << std::endl;
+    //std::cerr << x << std::endl;
     return x;
 }
 
