@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "TestMapGenerator.h"
 #include "Scene.h"
+#include "Car1.h"
 
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 720;
@@ -15,7 +16,8 @@ const int RENDERER_FLAGS = SDL_RENDERER_ACCELERATED /* | SDL_RENDERER_PRESENTVSY
 const std::vector<const char*> images = {
         "images/ACircle.png",
         "images/ACircle2.png",
-        "images/ACircle3.png"
+        "images/ACircle3.png",
+        "images/car1.png"
 };
 
 const long double CAMERA_SPEED = 0.001, SEED = 0.54455712795763551975, WHEEL_SENSITIVITY = 0.1;
@@ -63,9 +65,9 @@ void gen2(WorldSprite* &map, Camera* playerCamera){
 
     map->setTexture(mapTexture);
 
-    map->setWorldPosition(0.5, 0.8);
+    map->setWorldPosition(1.0000000000, 0.80000000);
 
-    map->setWorldSize(0.5, 0.5);
+    map->setWorldSize(0.500000000000, 0.500000000);
 }
 
 void moveCamera(Camera* playerCamera, bool wPressed, bool sPressed, bool aPressed, bool dPressed){
@@ -135,6 +137,13 @@ void eventCheck(Camera* playerCamera, bool &isRunning, bool &wPressed, bool &sPr
     }
 }
 
+void accelerateCar(Car1 &car, bool aPressed, bool dPressed) {
+    if(aPressed) car.setAcceleration(-0.5);
+    if(dPressed) car.setAcceleration(0.5);
+    if(aPressed && dPressed) car.setAcceleration(0);
+    if(!aPressed && !dPressed) car.setAcceleration(0);
+}
+
 int main(int argc, char *argv[]){
     bool isRunning;
 
@@ -142,7 +151,6 @@ int main(int argc, char *argv[]){
     SDL_Renderer* renderer = nullptr;
 
     //SDL_SetHint(SDL_HINT_RENDER_DRIVER, "direct3d12");
-
 
     std::vector<SDL_Texture*> textures;
 
@@ -152,7 +160,7 @@ int main(int argc, char *argv[]){
 
 
     if(initSuccess){
-        auto* playerCamera = new Camera(renderer);
+        auto* playerCamera = new Camera(renderer, SDL_GetTicks64());
 
         Scene mainScene = Scene(playerCamera);
 
@@ -187,6 +195,16 @@ int main(int argc, char *argv[]){
 
         mainScene.addSprite(map2);
 
+
+        Car1 car(playerCamera);
+
+        car.loadTexture(images[3]);
+        car.setWorldSize(0.4, 0.1);
+
+
+        mainScene.addSprite(&car);
+        mainScene.followSprite(&car);
+
         isRunning = true;
 
         bool wPressed = false, sPressed = false, aPressed = false, dPressed = false;
@@ -194,7 +212,15 @@ int main(int argc, char *argv[]){
         while(isRunning) {
             moveCamera(playerCamera, wPressed, sPressed, aPressed, dPressed);
 
+            accelerateCar(car, aPressed, dPressed);
+
             SDL_RenderClear(renderer);
+
+            car.updatePosition();
+
+            long double X, Y;
+
+            car.getWorldPosition(&X, &Y);
 
             mainScene.renderAll();
 
