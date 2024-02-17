@@ -9,11 +9,15 @@ class Camera{
 public:
     explicit Camera(SDL_Renderer* renderer);
 
+    explicit Camera(SDL_Renderer* renderer, uint64_t frameTime);
+
     SDL_Renderer* getRenderer();
 
     void setX(long double x);
 
     void setY(long double y);
+
+    void setPosition(long double x, long double y);
 
     void moveX(long double deltaX);
 
@@ -48,6 +52,8 @@ public:
 
     [[nodiscard]] uint64_t getPreviousFrameTime() const;
 
+    [[nodiscard]] uint64_t getFrameTimeDifference() const;
+
     void updateFrameTime(uint64_t frameTime);
 
 private:
@@ -77,6 +83,27 @@ Camera::Camera(SDL_Renderer* renderer) {
     _previousFrameTime = 0;
 }
 
+
+Camera::Camera(SDL_Renderer *renderer, uint64_t frameTime) {
+    _renderer = renderer;
+
+    int windowWidth, windowHeight, minWindowDimension;
+    SDL_GetRendererOutputSize(_renderer, &windowWidth, &windowHeight);
+    minWindowDimension = std::min(windowWidth, windowHeight);
+
+    _pixelsPerUnit = minWindowDimension;
+    _screenMultiplierX = static_cast<long double>(windowWidth) / minWindowDimension;
+    _screenMultiplierY = static_cast<long double>(windowHeight) / minWindowDimension;
+
+    _x = 0;
+    _y = 0;
+    _zoom = 1;
+
+    _frameTime = frameTime;
+    _previousFrameTime = frameTime;
+}
+
+
 SDL_Renderer *Camera::getRenderer() {
     return _renderer;
 }
@@ -88,6 +115,12 @@ void Camera::setX(long double x) {
 void Camera::setY(long double y) {
     _y = y;
 }
+
+void Camera::setPosition(long double x, long double y) {
+    _x = x;
+    _y = y;
+}
+
 
 void Camera::setZoom(long double zoom) {
     _zoom = zoom;
@@ -155,6 +188,10 @@ uint64_t Camera::getFrameTime() const {
 
 uint64_t Camera::getPreviousFrameTime() const {
     return _previousFrameTime;
+}
+
+uint64_t Camera::getFrameTimeDifference() const {
+    return _frameTime - _previousFrameTime;
 }
 
 void Camera::updateFrameTime(uint64_t frameTime) {
