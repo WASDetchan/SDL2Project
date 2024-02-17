@@ -14,6 +14,7 @@ add_executable(SDL2Test Main.cpp Main.cpp Init.h AnimatedTexture.h Particles.h S
         ACircle2.h
         TestMapGenerator.h
         Scene.h
+        Car1.h
 )
 target_link_libraries(SDL2Test ${SDL2_LIBRARIES})
 target_link_libraries(SDL2Test SDL2_image::SDL2_image)
