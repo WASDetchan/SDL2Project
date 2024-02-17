@@ -1,5 +1,5 @@
-#ifndef SDL2TEST_WORLDSPRITE_H
-#define SDL2TEST_WORLDSPRITE_H
+#ifndef SDL2TEST_WORLD_SPRITE_H
+#define SDL2TEST_WORLD_SPRITE_H
 
 #include "Sprite.h"
 
@@ -13,7 +13,7 @@ public:
 
     void setWorldSize(long double w, long double h);
 
-    void setWorldRotationCentre(long double x, long double y);
+    void setWorldRotationCentre(long double x, long double y); //TODO fix rotation
 
     virtual void getWorldPosition(long double *x, long double *y) const;
 
@@ -116,4 +116,4 @@ void WorldSprite::getWorldRotationCentre(long double *x, long double *y) const {
 }
 
 
-#endif //SDL2TEST_WORLDSPRITE_H
+#endif //SDL2TEST_WORLD_SPRITE_H

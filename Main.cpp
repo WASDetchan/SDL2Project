@@ -11,7 +11,7 @@
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 720;
 const int IMG_FLAGS = IMG_INIT_PNG;
-const int RENDERER_FLAGS = SDL_RENDERER_ACCELERATED /* | SDL_RENDERER_PRESENTVSYNC*/;
+const int RENDERER_FLAGS = SDL_RENDERER_ACCELERATED  | SDL_RENDERER_PRESENTVSYNC;
 
 const std::vector<const char*> images = {
         "images/ACircle.png",
@@ -137,11 +137,17 @@ void eventCheck(Camera* playerCamera, bool &isRunning, bool &wPressed, bool &sPr
     }
 }
 
-void accelerateCar(Car1 &car, bool aPressed, bool dPressed) {
-    if(aPressed) car.setAcceleration(-0.5);
-    if(dPressed) car.setAcceleration(0.5);
-    if(aPressed && dPressed) car.setAcceleration(0);
-    if(!aPressed && !dPressed) car.setAcceleration(0);
+void accelerateCar(Car1 &car, bool wPressed, bool sPressed, bool aPressed, bool dPressed) {
+    if(sPressed) car.setAcceleration(-0.5);
+    if(wPressed) car.setAcceleration(0.5);
+    if(sPressed && wPressed) car.setAcceleration(0);
+    if(!sPressed && !wPressed) car.setAcceleration(0);
+
+    car.turnLeft(false);
+    car.turnRight(false);
+
+    if(aPressed) car.turnLeft(true);
+    if(dPressed) car.turnRight(true);
 }
 
 int main(int argc, char *argv[]){
@@ -212,7 +218,7 @@ int main(int argc, char *argv[]){
         while(isRunning) {
             moveCamera(playerCamera, wPressed, sPressed, aPressed, dPressed);
 
-            accelerateCar(car, aPressed, dPressed);
+            accelerateCar(car, wPressed, sPressed, aPressed, dPressed);
 
             SDL_RenderClear(renderer);
 
