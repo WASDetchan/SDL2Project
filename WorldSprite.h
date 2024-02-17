@@ -9,9 +9,13 @@ public:
 
     void setWorldPosition(long double x, long double y);
 
+    void moveWorldPosition(long double x, long double y);
+
     void setWorldSize(long double w, long double h);
 
     void setWorldRotationCentre(long double x, long double y);
+
+    virtual void getWorldPosition(long double *x, long double *y) const;
 
     bool rotate; // temporary !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 protected:
@@ -20,8 +24,6 @@ protected:
     void getDestinationRect(SDL_Rect *&destinationRect) final;
 
     void getRotationCentre(SDL_Point *&center) final;
-
-    virtual void getWorldPosition(long double *x, long double *y) const;
 
     virtual void getWorldSize(long double *w, long double *h) const;
 
@@ -41,6 +43,11 @@ WorldSprite::WorldSprite(Camera *playerCamera) : Sprite(playerCamera) {
 void WorldSprite::setWorldPosition(long double x, long double y) {
     _worldX = x;
     _worldY = y;
+}
+
+void WorldSprite::moveWorldPosition(long double x, long double y) {
+    _worldX += x;
+    _worldY += y;
 }
 
 void WorldSprite::setWorldSize(long double w, long double h) {
@@ -69,8 +76,8 @@ void WorldSprite::getDestinationRect(SDL_Rect *&destinationRect) {
 
     destinationRect = new SDL_Rect({static_cast<int>(screenX * pixelsPerUnit),
                                    static_cast<int>(screenY * pixelsPerUnit),
-                                   static_cast<int>(screenWidth * pixelsPerUnit),
-                                   static_cast<int>(screenHeight * pixelsPerUnit)});
+                                   static_cast<int>(ceill(screenWidth * pixelsPerUnit)),
+                                   static_cast<int>(ceill(screenHeight * pixelsPerUnit))});
 }
 
 void WorldSprite::getRotationCentre(SDL_Point *&center) {
@@ -107,7 +114,6 @@ void WorldSprite::getWorldRotationCentre(long double *x, long double *y) const {
     *x = _worldRotationCentreX;
     *y = _worldRotationCentreY;
 }
-
 
 
 #endif //SDL2TEST_WORLDSPRITE_H
