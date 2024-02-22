@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="SDL2Test"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\Downloads\;CMake Files\..\..\..\Downloads\SDL2-devel-2.30.0-VC\;CMake Files\..\..\..\Downloads\SDL2-devel-2.30.0-VC\SDL2-2.30.0\;CMake Files\..\..\..\Downloads\SDL2-devel-2.30.0-VC\SDL2-2.30.0\cmake\;CMake Files\..\..\..\Downloads\SDL2_image-devel-2.8.2-VC\;CMake Files\..\..\..\Downloads\SDL2_image-devel-2.8.2-VC\SDL2_image-2.8.2\;CMake Files\..\..\..\Downloads\SDL2_image-devel-2.8.2-VC\SDL2_image-2.8.2\cmake\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="SDL2Test">
+				<Option output="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/SDL2Test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/Kostya/Downloads/SDL2-devel-2.30.0-VC/SDL2-2.30.0/cmake/../include"/>
+					<Add directory="C:/Users/Kostya/Downloads/SDL2_image-devel-2.8.2-VC/SDL2_image-2.8.2/cmake/../include"/>
+					<Add directory="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++"/>
+					<Add directory="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward"/>
+					<Add directory="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include"/>
+					<Add directory="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../include"/>
+					<Add directory="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed"/>
+					<Add directory="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 SDL2Test"/>
+					<CompileFile command="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="SDL2Test/fast">
+				<Option output="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/SDL2Test.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/Kostya/Downloads/SDL2-devel-2.30.0-VC/SDL2-2.30.0/cmake/../include"/>
+					<Add directory="C:/Users/Kostya/Downloads/SDL2_image-devel-2.8.2-VC/SDL2_image-2.8.2/cmake/../include"/>
+					<Add directory="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++"/>
+					<Add directory="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward"/>
+					<Add directory="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include"/>
+					<Add directory="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../include"/>
+					<Add directory="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed"/>
+					<Add directory="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 SDL2Test/fast"/>
+					<CompileFile command="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/Users/Kostya/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/ACircle2.h">
+			<Option target="SDL2Test"/>
+		</Unit>
+		<Unit filename="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/AnimatedTexture.h">
+			<Option target="SDL2Test"/>
+		</Unit>
+		<Unit filename="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/Camera.h">
+			<Option target="SDL2Test"/>
+		</Unit>
+		<Unit filename="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/Car1.h">
+			<Option target="SDL2Test"/>
+		</Unit>
+		<Unit filename="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/Init.h">
+			<Option target="SDL2Test"/>
+		</Unit>
+		<Unit filename="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/Main.cpp">
+			<Option target="SDL2Test"/>
+		</Unit>
+		<Unit filename="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/Particles.h">
+			<Option target="SDL2Test"/>
+		</Unit>
+		<Unit filename="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/Scene.h">
+			<Option target="SDL2Test"/>
+		</Unit>
+		<Unit filename="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/Sprite.h">
+			<Option target="SDL2Test"/>
+		</Unit>
+		<Unit filename="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/TestHeader.h">
+			<Option target="SDL2Test"/>
+		</Unit>
+		<Unit filename="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/TestMapGenerator.h">
+			<Option target="SDL2Test"/>
+		</Unit>
+		<Unit filename="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/WorldSprite.h">
+			<Option target="SDL2Test"/>
+		</Unit>
+		<Unit filename="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/../../../Downloads/SDL2-devel-2.30.0-VC/SDL2-2.30.0/cmake/sdl2-config-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Downloads\SDL2-devel-2.30.0-VC\SDL2-2.30.0\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/../../../Downloads/SDL2-devel-2.30.0-VC/SDL2-2.30.0/cmake/sdl2-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Downloads\SDL2-devel-2.30.0-VC\SDL2-2.30.0\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/../../../Downloads/SDL2_image-devel-2.8.2-VC/SDL2_image-2.8.2/cmake/sdl2_image-config-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Downloads\SDL2_image-devel-2.8.2-VC\SDL2_image-2.8.2\cmake\"/>
+		</Unit>
+		<Unit filename="C:/Users/Kostya/CLionProjects/SDL2Test3/SDL2Project-master/../../../Downloads/SDL2_image-devel-2.8.2-VC/SDL2_image-2.8.2/cmake/sdl2_image-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\Downloads\SDL2_image-devel-2.8.2-VC\SDL2_image-2.8.2\cmake\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
