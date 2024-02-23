@@ -20,7 +20,7 @@ bool init (SDL_Window* &window, const int width, const int height){
                                SDL_WINDOWPOS_UNDEFINED,
                                width,
                                height,
-                               SDL_WINDOW_MOUSE_FOCUS | SDL_WINDOW_RESIZABLE);
+                               SDL_WINDOW_MOUSE_FOCUS | SDL_WINDOW_FULLSCREEN_DESKTOP);
 
     if(window == nullptr){
         printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
