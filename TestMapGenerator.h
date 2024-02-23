@@ -5,7 +5,7 @@
 #include <cmath>
 #include "Camera.h"
 
-const long long INITIAL_SPIN = 10000;
+const long long INITIAL_SPIN = 10000, PAINT_RAD = 3;
 
 class TestMapGenerator{
 public:
@@ -17,9 +17,11 @@ public:
 
     void generateMap(SDL_Texture *&texture, int32_t w, int32_t h);
 
-    void generateRoad(SDL_Surface *map, int32_t x0, int32_t y0, int32_t x1, int32_t y1);
+    void generateRoad(std::vector<std::vector<int>> &m, int32_t w, int32_t h);
 
-    void testGenerator();
+    void generateSegment(std::vector<std::vector<int>> &m, int32_t x0, int32_t y0, int32_t x1, int32_t y1, int32_t w, int32_t h);
+
+    [[maybe_unused]] void testGenerator();
 
 private:
     [[maybe_unused]] long double _seed, _last;
@@ -52,7 +54,7 @@ TestMapGenerator::TestMapGenerator(Camera* playerCamera, long double seed) {
     spin(INITIAL_SPIN);
 }
 
-void TestMapGenerator::generateRoad(SDL_Surface *map, int32_t x0, int32_t y0, int32_t x1, int32_t y1) {
+void TestMapGenerator::generateSegment(std::vector<std::vector<int>> &m, int32_t x0, int32_t y0, int32_t x1, int32_t y1, int32_t w, int32_t h) {
 
     int32_t deltaX = abs(x1 - x0);
     int32_t deltaY = abs(y1 - y0);
@@ -75,12 +77,12 @@ void TestMapGenerator::generateRoad(SDL_Surface *map, int32_t x0, int32_t y0, in
     int32_t x = x0;
     int32_t y = y0;
 
-    const uint32_t color = SDL_MapRGB(map->format, 0, 255, 0);
+
 
     for(std::pair<long double, int32_t> step: route){
         int32_t direction = step.second;
 
-        SDL_Rect pixel = SDL_Rect({x, y, 1, 1});
+        m[x][y] = 1;
 
         if(direction){
             x += multiplierX;
@@ -88,43 +90,57 @@ void TestMapGenerator::generateRoad(SDL_Surface *map, int32_t x0, int32_t y0, in
         else{
             y += multiplierY;
         }
-
-        SDL_FillRect(map, &pixel, color);
+        for(int i = x - PAINT_RAD; i <= x + PAINT_RAD; i++){
+            for(int j = y - PAINT_RAD; j <= y + PAINT_RAD; j++){
+                if(i >= 0 && i < w && j >= 0 && j < h && m[i][j] != 1 && m[i][j] != 2){
+                    m[i][j] = 3;
+                }
+            }
+        }
     }
 
-    SDL_Rect pixel = SDL_Rect({x, y, 1, 1});
+    m[x][y] = 1;
 
-    SDL_FillRect(map, &pixel, color);
+    for(int i = x - PAINT_RAD; i <= x + PAINT_RAD; i++){
+        for(int j = y - PAINT_RAD; j <= y + PAINT_RAD; j++){
+            if(i >= 0 && i < w && j >= 0 && j < h && m[i][j] != 1){
+                m[i][j] = 2;
+            }
+        }
+    }
 }
 
 void TestMapGenerator::generateMap(SDL_Texture *&texture, int32_t w, int32_t h) {
-    SDL_Surface* map = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
 
-    SDL_FillRect(map, nullptr, SDL_MapRGB(map->format, 255, 0, 0));
+    std::vector<std::vector<int>> m(w);
+    for(auto &i : m) i.resize(h);
 
-    auto stops =  5 + static_cast<int32_t>(getNext() * 6);
 
-    int32_t x0 = 0;
-    int32_t y0 = 0;
-    int32_t x1 = 0;
-    int32_t y1 = 0;
-
-    for(int stop = 0; stop < stops; stop++){
-        x1 = static_cast<int32_t>(getNext() * w);
-
-        y1 = static_cast<int32_t>(getNext() * h);
-
-        if(x0 == x1 || y0 == y1){
-            continue;
-        }
-
-        generateRoad(map, x0, y0, x1, y1);
-
-        x0 = x1;
-        y0 = y1;
+    auto roads = 1 + getNext() * 4.0;
+    for(auto i = 0; i < roads; i++){
+        generateRoad(m, w, h);
     }
 
-    generateRoad(map, x1, y1, w - 1, h - 1);
+    SDL_Surface* map = SDL_CreateRGBSurface(0, w, h, 32, 0, 0, 0, 0);
+    SDL_FillRect(map, nullptr, SDL_MapRGB(map->format, 255, 0, 0));
+    const uint32_t color = SDL_MapRGB(map->format, 0, 255, 0);
+    const uint32_t color2 = SDL_MapRGB(map->format, 0, 255, 255);
+    const uint32_t color3 = SDL_MapRGB(map->format, 255, 255, 0);
+    for(int x = 0; x < w; x++){
+        for(int y = 0; y < h; y++){
+            int col = m[x][y];
+            SDL_Rect pixel = SDL_Rect({x, y, 1, 1});
+            if(col == 1){
+                SDL_FillRect(map, &pixel, color);
+            }
+            if(col == 2){
+                SDL_FillRect(map, &pixel, color2);
+            }
+            if(col == 3){
+                SDL_FillRect(map, &pixel, color3);
+            }
+        }
+    }
 
     texture = SDL_CreateTextureFromSurface(_playerCamera->getRenderer(), map);
 }
@@ -137,7 +153,7 @@ long double TestMapGenerator::generateNext(long double a) {
     return x;
 }
 
-void TestMapGenerator::testGenerator() {
+[[maybe_unused]] void TestMapGenerator::testGenerator() {
     auto a = getNext();
     int m[10] = {};
     const int n = 10000;
@@ -159,6 +175,36 @@ void TestMapGenerator::spin(long long int n) {
     for(long long i = 0; i < n; i++){
         getNext();
     }
+}
+
+void TestMapGenerator::generateRoad(std::vector<std::vector<int>> &m, int32_t w, int32_t h) {
+    auto stops =  0 + static_cast<int32_t>(getNext() * 3.0);
+
+    int32_t x0 = 0;
+    int32_t y0 = 0;
+    int32_t x1 = 0;
+    int32_t y1 = 0;
+
+    for(int stop = 0; stop < stops; stop++){
+        do{
+            x1 = static_cast<int32_t>(getNext() * w);
+
+            y1 = static_cast<int32_t>(getNext() * h);
+
+        }
+        while(m[x1][y1] != 0);
+
+        if(x0 == x1 || y0 == y1){
+            continue;
+        }
+
+        generateSegment(m, x0, y0, x1, y1, w, h);
+
+        x0 = x1;
+        y0 = y1;
+    }
+    if(x1 != w - 1 && y1 != h - 1) generateSegment(m, x1, y1, w - 1, h - 1, w, h);
+
 }
 
 
