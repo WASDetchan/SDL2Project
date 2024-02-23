@@ -19,7 +19,7 @@ const std::vector<const char*> images = {
         "images/car11.png"
 };
 
-const long double CAMERA_SPEED = 0.001, SEED = 0.54455712795763551975, WHEEL_SENSITIVITY = 1;
+const long double CAMERA_SPEED = 0.001, SEED = 0.58455712795763551975, WHEEL_SENSITIVITY = 1;
 
 WorldSprite gen1(Camera* playerCamera){
     auto seed = SEED;
@@ -50,7 +50,7 @@ void gen2(WorldSprite* &map, Camera* playerCamera){
     map = new WorldSprite(playerCamera);
     map->setTexture(mapTexture);
     map->setWorldPosition(1.0000000000, 0.80000000);
-    map->setWorldSize(0.500000000000, 0.500000000);
+    map->setWorldSize(25.00000000000, 25.00000000);
 }
 
 [[maybe_unused]] void moveCamera(Camera* playerCamera, bool wPressed, bool sPressed, bool aPressed, bool dPressed){
