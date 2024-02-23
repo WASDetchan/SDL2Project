@@ -14,9 +14,7 @@ const long double MIN_SPEED = 0.001;
 class Car1 : public WorldSprite{
 public:
     void updatePosition();
-    void setSpeed(long double speed);
     void setAcceleration(long double acceleration);
-    void setRadiusOfCurvature(long double radiusOfCurvature);
 
     void turnRight(bool turn);
     void turnLeft(bool turn);
@@ -83,22 +81,14 @@ void Car1::updatePosition() {
     while(_angle < 0) _angle += 2 * M_PI;
     //_speed += _acceleration * deltaTime; // v = v0 + at in projection on the axis of motion as motion is linear and acceleration is uniform
     _speed = ex * (fc * _speed - _acceleration) / fc + _acceleration / fc;
-    if(_acceleration == 0 && _speed < MIN_SPEED){
+    if(_acceleration == 0 && abs(_speed) < MIN_SPEED){
         _speed = 0;
     }
     moveWorldPosition(deltaX, deltaY);
 }
 
-void Car1::setSpeed(long double speed) {
-    _speed = speed;
-}
-
 void Car1::setAcceleration(long double acceleration) {
     _acceleration = acceleration;
-}
-
-void Car1::setRadiusOfCurvature(long double radiusOfCurvature) {
-    _radiusOfCurvature = radiusOfCurvature;
 }
 
 void Car1::turnRight(bool turn) {
