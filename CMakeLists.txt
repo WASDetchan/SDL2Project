@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.7)
 
 project(SDL2Test)
 
-set(SDL2_DIR "./SDL2/SDL2_main/cmake")
+set(SDL2_DIR "./SDL2/SDL2/cmake")
 set(SDL2_image_DIR "./SDL2/SDL2_image/cmake")
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
