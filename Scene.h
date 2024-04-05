@@ -1,8 +1,10 @@
 #ifndef SDL2TEST_SCENE_H
 #define SDL2TEST_SCENE_H
 
+#include <map>
 #include "Camera.h"
 #include "Sprite.h"
+#include "WorldSprite.h"
 
 const long double CAMERA_SMOOTH_FOLLOW_COEFFICIENT = 0.01;
 
@@ -19,6 +21,8 @@ public:
     void setCamera(Camera* camera);
 
     void addSprite(Sprite* sprite);
+
+    void removeSprite(Sprite* sprite);
 
     void renderAll();
 
@@ -54,7 +58,9 @@ void Scene::addSprite(Sprite *sprite) {
     _sprites.push_back(sprite);
 }
 
-
+void Scene::removeSprite(Sprite* sprite){
+    _sprites.erase(std::remove(_sprites.begin(), _sprites.end(), sprite), _sprites.end());
+}
 
 void Scene::renderAll() {
     switch(_followMode){

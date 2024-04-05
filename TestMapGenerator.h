@@ -5,7 +5,7 @@
 #include <cmath>
 #include "Camera.h"
 
-const long long INITIAL_SPIN = 10000, PAINT_RAD = 3;
+const long long INITIAL_SPIN = 10000, PAINT_RAD = 15;
 
 class TestMapGenerator{
 public:
@@ -22,6 +22,9 @@ public:
     void generateSegment(std::vector<std::vector<int>> &m, int32_t x0, int32_t y0, int32_t x1, int32_t y1, int32_t w, int32_t h);
 
     [[maybe_unused]] void testGenerator();
+
+
+
 
 private:
     [[maybe_unused]] long double _seed, _last;
@@ -64,7 +67,7 @@ void TestMapGenerator::generateSegment(std::vector<std::vector<int>> &m, int32_t
     int32_t multiplierX = deltaX / (x1 - x0);
     int32_t multiplierY = deltaY / (y1 - y0);
 
-    std::vector < std::pair < long double, int32_t >> route(steps);
+    std::vector <std::pair<long double, int32_t>> route(steps);
     std::fill(route.begin(), route.begin() + deltaX, std::make_pair(0, 1));
 
 
@@ -116,7 +119,7 @@ void TestMapGenerator::generateMap(SDL_Texture *&texture, int32_t w, int32_t h) 
     for(auto &i : m) i.resize(h);
 
 
-    auto roads = 1 + getNext() * 4.0;
+    auto roads = 1 + getNext() * 6.0;
     for(auto i = 0; i < roads; i++){
         generateRoad(m, w, h);
     }
@@ -178,7 +181,7 @@ void TestMapGenerator::spin(long long int n) {
 }
 
 void TestMapGenerator::generateRoad(std::vector<std::vector<int>> &m, int32_t w, int32_t h) {
-    auto stops =  0 + static_cast<int32_t>(getNext() * 3.0);
+    auto stops =  0 + static_cast<int32_t>(getNext() * 6.0);
 
     int32_t x0 = 0;
     int32_t y0 = 0;

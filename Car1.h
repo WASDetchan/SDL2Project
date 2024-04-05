@@ -81,6 +81,7 @@ void Car1::updatePosition() {
     while(_angle < 0) _angle += 2 * M_PI;
     //_speed += _acceleration * deltaTime; // v = v0 + at in projection on the axis of motion as motion is linear and acceleration is uniform
     _speed = ex * (fc * _speed - _acceleration) / fc + _acceleration / fc;
+    //_speed += _acceleration * deltaTime;
     if(_acceleration == 0 && abs(_speed) < MIN_SPEED){
         _speed = 0;
     }
