@@ -10,7 +10,7 @@
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 720;
 const int IMG_FLAGS = IMG_INIT_PNG;
-const int RENDERER_FLAGS = SDL_RENDERER_ACCELERATED  | SDL_RENDERER_PRESENTVSYNC;
+const int RENDERER_FLAGS = 0 | SDL_RENDERER_ACCELERATED  | SDL_RENDERER_PRESENTVSYNC;
 
 const std::vector<const char*> images = {
         "images/ACircle.png",
@@ -19,7 +19,7 @@ const std::vector<const char*> images = {
         "images/car11.png"
 };
 
-const long double CAMERA_SPEED = 0.001, SEED = 0.58455712795763551975, WHEEL_SENSITIVITY = 1;
+const long double CAMERA_SPEED = 0.001, SEED = 0.586456314595763551975, WHEEL_SENSITIVITY = 1;
 
 WorldSprite gen1(Camera* playerCamera){
     auto seed = SEED;
@@ -39,14 +39,14 @@ WorldSprite gen1(Camera* playerCamera){
 }
 
 void gen2(WorldSprite* &map, Camera* playerCamera){
-    auto seed = SEED;
+    static auto seed = SEED;
     seed *= 14287547854223;
     seed /= 778472857548;
     seed -= static_cast<uint64_t>(seed);
 
     TestMapGenerator generator = TestMapGenerator(playerCamera, seed);
     SDL_Texture* mapTexture;
-    generator.generateMap(mapTexture, 100, 100);
+    generator.generateMap(mapTexture, 1000, 1000);
     map = new WorldSprite(playerCamera);
     map->setTexture(mapTexture);
     map->setWorldPosition(1.0000000000, 0.80000000);
@@ -68,7 +68,7 @@ void gen2(WorldSprite* &map, Camera* playerCamera){
     playerCamera->moveY(deltaY);
 }
 
-void eventCheck(Camera* playerCamera, bool &isRunning, bool &wPressed, bool &sPressed, bool &aPressed, bool &dPressed, bool &spacePressed){
+void eventCheck(Camera* playerCamera, bool &isRunning, bool &wPressed, bool &sPressed, bool &aPressed, bool &dPressed, bool &spacePressed, bool &nPressed){
     static SDL_Event event;
 
     while(SDL_PollEvent(&event)){
@@ -91,6 +91,9 @@ void eventCheck(Camera* playerCamera, bool &isRunning, bool &wPressed, bool &sPr
                     break;
                 case SDLK_SPACE:
                     spacePressed = true;
+                    break;
+                case SDLK_n:
+                    nPressed = true;
                     break;
                 case SDLK_ESCAPE:
                     isRunning = false;
@@ -169,10 +172,7 @@ int main(int argc, char *argv[]){
         circle3.setWorldPosition(0.5, 0.5);
         circle3.setWorldSize(0.1, 0.1);
 
-
-        WorldSprite map1 = gen1(playerCamera);
         WorldSprite* map2;
-        mainScene.addSprite(&map1);
         gen2(map2, playerCamera);
         mainScene.addSprite(map2);
 
@@ -180,16 +180,21 @@ int main(int argc, char *argv[]){
         Car1 car(playerCamera);
         car.loadTexture(images[3]);
         car.setWorldSize(0.4, 0.2);
-        mainScene.addSprite(&car);
+        auto cart = &car;
+        mainScene.addSprite(cart);
         mainScene.followSprite(&car, SMOOTH);
 
 
+
+
         isRunning = true;
-        bool wPressed = false, sPressed = false, aPressed = false, dPressed = false, spacePressed = false;
+        bool wPressed = false, sPressed = false, aPressed = false, dPressed = false, spacePressed = false, nPressed = false;
 
 
         while(isRunning) {
             playerCamera->updateFrameTime(SDL_GetTicks64());
+
+            std::cout << 1000.0l / playerCamera->getFrameTimeDifference() << std::endl;
 
             accelerateCar(car, wPressed, sPressed, aPressed, dPressed, spacePressed);
 
@@ -199,13 +204,24 @@ int main(int argc, char *argv[]){
 
             long double X, Y;
 
+            if(nPressed){
+                nPressed = false;
+                mainScene.removeSprite(map2);
+                delete map2;
+                gen2(map2, playerCamera);
+                mainScene.addSprite(map2);
+
+                mainScene.removeSprite(cart);
+                mainScene.addSprite(cart);
+            }
+
             car.getWorldPosition(&X, &Y);
 
             mainScene.renderAll();
 
             SDL_RenderPresent(renderer);
 
-            eventCheck(playerCamera, isRunning, wPressed, sPressed, aPressed, dPressed, spacePressed);
+            eventCheck(playerCamera, isRunning, wPressed, sPressed, aPressed, dPressed, spacePressed, nPressed);
         }
     }
 

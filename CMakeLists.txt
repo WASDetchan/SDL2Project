@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.7)
 
 project(SDL2Test)
 
-set(SDL2_DIR "C:/Users/Kostya/Downloads/SDL2-devel-2.30.0-VC/SDL2-2.30.0/cmake")
-set(SDL2_image_DIR "C:/Users/Kostya/Downloads/SDL2_image-devel-2.8.2-VC/SDL2_image-2.8.2/cmake")
+set(SDL2_DIR "./SDL2/SDL2_main/cmake")
+set(SDL2_image_DIR "./SDL2/SDL2_image/cmake")
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
