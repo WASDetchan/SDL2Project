@@ -19,9 +19,9 @@ public:
 
     PseudoNonPositionalVector operator*(NonPositionalVector other) const;
 
-    CompositeFloat getMagnitude() const;
+    [[nodiscard]] CompositeFloat getMagnitude() const;
 
-    double getAngleToXAxis() const;
+    [[nodiscard]] double getAngleToXAxis() const;
 private:
     CompositeFloat X, Y;
 };
