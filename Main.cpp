@@ -194,8 +194,6 @@ int main(int argc, char *argv[]){
         while(isRunning) {
             playerCamera->updateFrameTime(SDL_GetTicks64());
 
-            std::cout << 1000.0l / playerCamera->getFrameTimeDifference() << std::endl;
-
             accelerateCar(car, wPressed, sPressed, aPressed, dPressed, spacePressed);
 
             SDL_RenderClear(renderer);

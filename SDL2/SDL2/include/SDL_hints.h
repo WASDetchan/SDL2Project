@@ -344,7 +344,7 @@ extern "C" {
  *  application.
  *
  *  The contents of this hint must be 4 comma-separated integers, the first
- *  is the bounds x, then y, width and height, in that order.
+ *  is the bounds x, then Y, width and height, in that order.
  */
 #define SDL_HINT_DISPLAY_USABLE_BOUNDS "SDL_DISPLAY_USABLE_BOUNDS"
 

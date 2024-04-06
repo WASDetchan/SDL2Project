@@ -765,7 +765,7 @@ extern DECLSPEC Uint32 SDLCALL SDL_GetWindowPixelFormat(SDL_Window * window);
  * \param title the title of the window, in UTF-8 encoding
  * \param x the x position of the window, `SDL_WINDOWPOS_CENTERED`, or
  *          `SDL_WINDOWPOS_UNDEFINED`
- * \param y the y position of the window, `SDL_WINDOWPOS_CENTERED`, or
+ * \param y the Y position of the window, `SDL_WINDOWPOS_CENTERED`, or
  *          `SDL_WINDOWPOS_UNDEFINED`
  * \param w the width of the window, in screen coordinates
  * \param h the height of the window, in screen coordinates
@@ -930,7 +930,7 @@ extern DECLSPEC void *SDLCALL SDL_GetWindowData(SDL_Window * window,
  * \param window the window to reposition
  * \param x the x coordinate of the window in screen coordinates, or
  *          `SDL_WINDOWPOS_CENTERED` or `SDL_WINDOWPOS_UNDEFINED`
- * \param y the y coordinate of the window in screen coordinates, or
+ * \param y the Y coordinate of the window in screen coordinates, or
  *          `SDL_WINDOWPOS_CENTERED` or `SDL_WINDOWPOS_UNDEFINED`
  *
  * \since This function is available since SDL 2.0.0.
@@ -944,12 +944,12 @@ extern DECLSPEC void SDLCALL SDL_SetWindowPosition(SDL_Window * window,
  * Get the position of a window.
  *
  * If you do not need the value for one of the positions a NULL may be passed
- * in the `x` or `y` parameter.
+ * in the `x` or `Y` parameter.
  *
  * \param window the window to query
  * \param x a pointer filled in with the x position of the window, in screen
  *          coordinates, may be NULL
- * \param y a pointer filled in with the y position of the window, in screen
+ * \param y a pointer filled in with the Y position of the window, in screen
  *          coordinates, may be NULL
  *
  * \since This function is available since SDL 2.0.0.

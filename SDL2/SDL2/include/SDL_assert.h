@@ -142,7 +142,7 @@ extern DECLSPEC SDL_AssertState SDLCALL SDL_ReportAssertion(SDL_AssertData *,
 ;
 
 /* the do {} while(0) avoids dangling else problems:
-    if (x) SDL_assert(y); else blah();
+    if (x) SDL_assert(Y); else blah();
        ... without the do/while, the "else" could attach to this macro's "if".
    We try to handle just the minimum we need here in a macro...the loop,
    the static vars, and break points. The heavy lifting is handled in

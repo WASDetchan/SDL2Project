@@ -1,5 +1,5 @@
 # SDL2_image CMake configuration file:
-# This file is meant to be placed in a cmake subfolder of SDL2_image-devel-2.x.y-VC
+# This file is meant to be placed in a cmake subfolder of SDL2_image-devel-2.x.Y-VC
 
 include(FeatureSummary)
 set_package_properties(SDL2_image PROPERTIES

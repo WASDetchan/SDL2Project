@@ -23,7 +23,7 @@ Fields:
 * event.tfinger.touchId  - the Id of the touch device.
 * event.tfinger.fingerId - the Id of the finger which just went down.
 * event.tfinger.x        - the x coordinate of the touch (0..1)
-* event.tfinger.y        - the y coordinate of the touch (0..1)
+* event.tfinger.Y        - the Y coordinate of the touch (0..1)
 * event.tfinger.pressure - the pressure of the touch (0..1)
 
 SDL_FINGERMOTION:
@@ -31,7 +31,7 @@ Sent when a finger (or stylus) is moved on the touch device.
 Fields:
 Same as SDL_FINGERDOWN but with additional:
 * event.tfinger.dx       - change in x coordinate during this motion event.
-* event.tfinger.dy       - change in y coordinate during this motion event.
+* event.tfinger.dy       - change in Y coordinate during this motion event.
 
 SDL_FINGERUP:
 Sent when a finger (or stylus) is lifted from the touch device.
@@ -60,7 +60,7 @@ SDL_GetNumTouchFingers(touchID) may be used to get the number of fingers current
 The most common reason to access SDL_Finger is to query the fingers outside the event. In most cases accessing the fingers is using the event. This would be accomplished by code like the following:
 
       float x = event.tfinger.x;
-      float y = event.tfinger.y;
+      float Y = event.tfinger.Y;
 
 
 
@@ -70,7 +70,7 @@ A SDL_Finger is guaranteed to be persistent for the duration of a touch, but it 
 As a result, be very careful to check for NULL return values.
 
 A SDL_Finger has the following fields:
-* x, y:
+* x, Y:
 	The current coordinates of the touch.
 * pressure:
 	The pressure of the touch.

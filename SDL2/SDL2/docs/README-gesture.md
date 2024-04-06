@@ -56,7 +56,7 @@ Every time a finger is moved an SDL_MULTIGESTURE event is sent with the followin
 
 * event.mgesture.touchId - the Id of the touch on which the gesture was performed.
 * event.mgesture.x       - the normalized x coordinate of the gesture. (0..1)
-* event.mgesture.y       - the normalized y coordinate of the gesture. (0..1)
+* event.mgesture.Y       - the normalized Y coordinate of the gesture. (0..1)
 * event.mgesture.dTheta  - the amount that the fingers rotated during this motion.
 * event.mgesture.dDist   - the amount that the fingers pinched during this motion.
 * event.mgesture.numFingers - the number of fingers used in the gesture.

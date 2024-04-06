@@ -87,7 +87,7 @@ typedef enum
  * from the center of the earth, which is a positive Y value.
  *
  * values[0]: Acceleration on the x axis
- * values[1]: Acceleration on the y axis
+ * values[1]: Acceleration on the Y axis
  * values[2]: Acceleration on the z axis
  *
  * For phones held in portrait mode and game controllers held in front of you,
@@ -112,7 +112,7 @@ typedef enum
  * counter-clockwise.
  *
  * values[0]: Angular speed around the x axis (pitch)
- * values[1]: Angular speed around the y axis (yaw)
+ * values[1]: Angular speed around the Y axis (yaw)
  * values[2]: Angular speed around the z axis (roll)
  *
  * For phones held in portrait mode and game controllers held in front of you,

@@ -50,7 +50,7 @@ extern "C" {
  * \param title The title of the window, in UTF-8 encoding.
  * \param x The x position of the window, ::SDL_WINDOWPOS_CENTERED, or
  *          ::SDL_WINDOWPOS_UNDEFINED.
- * \param y The y position of the window, ::SDL_WINDOWPOS_CENTERED, or
+ * \param y The Y position of the window, ::SDL_WINDOWPOS_CENTERED, or
  *          ::SDL_WINDOWPOS_UNDEFINED.
  * \param w The width of the window.
  * \param h The height of the window.

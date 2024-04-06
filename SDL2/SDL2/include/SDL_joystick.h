@@ -900,7 +900,7 @@ extern DECLSPEC Uint8 SDLCALL SDL_JoystickGetHat(SDL_Joystick *joystick,
  * \param joystick the SDL_Joystick to query
  * \param ball the ball index to query; ball indices start at index 0
  * \param dx stores the difference in the x axis position since the last poll
- * \param dy stores the difference in the y axis position since the last poll
+ * \param dy stores the difference in the Y axis position since the last poll
  * \returns 0 on success or a negative error code on failure; call
  *          SDL_GetError() for more information.
  *

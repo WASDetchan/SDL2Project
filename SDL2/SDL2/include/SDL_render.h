@@ -960,7 +960,7 @@ extern DECLSPEC SDL_bool SDLCALL SDL_RenderIsClipEnabled(SDL_Renderer * renderer
 /**
  * Set the drawing scale for rendering on the current target.
  *
- * The drawing coordinates are scaled by the x/y scaling factors before they
+ * The drawing coordinates are scaled by the x/Y scaling factors before they
  * are used by the renderer. This allows resolution independent drawing with a
  * single coordinate system.
  *
@@ -1008,7 +1008,7 @@ extern DECLSPEC void SDLCALL SDL_RenderGetScale(SDL_Renderer * renderer,
  * \param windowX the real X coordinate in the window
  * \param windowY the real Y coordinate in the window
  * \param logicalX the pointer filled with the logical x coordinate
- * \param logicalY the pointer filled with the logical y coordinate
+ * \param logicalY the pointer filled with the logical Y coordinate
  *
  * \since This function is available since SDL 2.0.18.
  *
@@ -1032,7 +1032,7 @@ extern DECLSPEC void SDLCALL SDL_RenderWindowToLogical(SDL_Renderer * renderer,
  * \param renderer the renderer from which the window coordinates should be
  *                 calculated
  * \param logicalX the logical x coordinate
- * \param logicalY the logical y coordinate
+ * \param logicalY the logical Y coordinate
  * \param windowX the pointer filled with the real X coordinate in the window
  * \param windowY the pointer filled with the real Y coordinate in the window
  *
@@ -1167,7 +1167,7 @@ extern DECLSPEC int SDLCALL SDL_RenderClear(SDL_Renderer * renderer);
  *
  * \param renderer the rendering context
  * \param x the x coordinate of the point
- * \param y the y coordinate of the point
+ * \param y the Y coordinate of the point
  * \returns 0 on success or a negative error code on failure; call
  *          SDL_GetError() for more information.
  *
@@ -1222,9 +1222,9 @@ extern DECLSPEC int SDLCALL SDL_RenderDrawPoints(SDL_Renderer * renderer,
  *
  * \param renderer the rendering context
  * \param x1 the x coordinate of the start point
- * \param y1 the y coordinate of the start point
+ * \param y1 the Y coordinate of the start point
  * \param x2 the x coordinate of the end point
- * \param y2 the y coordinate of the end point
+ * \param y2 the Y coordinate of the end point
  * \returns 0 on success or a negative error code on failure; call
  *          SDL_GetError() for more information.
  *
@@ -1464,7 +1464,7 @@ extern DECLSPEC int SDLCALL SDL_RenderCopyEx(SDL_Renderer * renderer,
  *
  * \param renderer The renderer which should draw a point.
  * \param x The x coordinate of the point.
- * \param y The y coordinate of the point.
+ * \param y The Y coordinate of the point.
  * \return 0 on success, or -1 on error
  *
  * \since This function is available since SDL 2.0.10.
@@ -1491,9 +1491,9 @@ extern DECLSPEC int SDLCALL SDL_RenderDrawPointsF(SDL_Renderer * renderer,
  *
  * \param renderer The renderer which should draw a line.
  * \param x1 The x coordinate of the start point.
- * \param y1 The y coordinate of the start point.
+ * \param y1 The Y coordinate of the start point.
  * \param x2 The x coordinate of the end point.
- * \param y2 The y coordinate of the end point.
+ * \param y2 The Y coordinate of the end point.
  * \return 0 on success, or -1 on error
  *
  * \since This function is available since SDL 2.0.10.
