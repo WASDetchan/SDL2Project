@@ -18,27 +18,42 @@ public:
     NonPositionalVector operator+=(NonPositionalVector other);
 
     PseudoNonPositionalVector operator*(NonPositionalVector other) const;
+    NonPositionalVector operator*(CompositeFloat scalar) const;
+    NonPositionalVector operator*(double scalar) const;
+    NonPositionalVector operator*=(CompositeFloat scalar);
+
+    void setXYPosition(CompositeFloat x, CompositeFloat y);
+    void setPolarPosition(CompositeFloat angle, CompositeFloat radius);
 
     [[nodiscard]] CompositeFloat getMagnitude() const;
+    [[nodiscard]] CompositeFloat getXProjection() const;
+    [[nodiscard]] CompositeFloat getYProjection() const;
 
-    [[nodiscard]] double getAngleToXAxis() const;
+    [[nodiscard]] CompositeFloat getAngleToXAxis() const;
 private:
-    CompositeFloat X, Y;
+    CompositeFloat X, Y, Magnitude, Angle;
 };
 
 NonPositionalVector::NonPositionalVector() {
-    X = CompositeFloat(0.0);
-    Y = CompositeFloat(0.0);
+    auto x = CompositeFloat(0.0);
+    auto y = CompositeFloat(0.0);
+
+    *this = NonPositionalVector(x, y);
 }
 
 NonPositionalVector::NonPositionalVector(double x, double y) {
-    X = CompositeFloat(x);
-    Y = CompositeFloat(y);
+    *this = NonPositionalVector(CompositeFloat(x), CompositeFloat(y));
 }
 
 NonPositionalVector::NonPositionalVector(CompositeFloat x, CompositeFloat y) {
     X = x;
     Y = y;
+
+    auto xd = static_cast<double>(X);
+    auto yd = static_cast<double>(Y);
+    double l = sqrt(xd * xd + yd * yd);
+    Magnitude =  CompositeFloat(l);
+    Angle = CompositeFloat(atan2(yd, xd));
 }
 
 NonPositionalVector NonPositionalVector::operator+(NonPositionalVector other) const {
@@ -60,26 +75,57 @@ PseudoNonPositionalVector NonPositionalVector::operator*(NonPositionalVector oth
     return PseudoNonPositionalVector(v);
 }
 
+NonPositionalVector NonPositionalVector::operator*(CompositeFloat scalar) const {
+    CompositeFloat X1 = X, X2, Y1 = Y, Y2;
+    X2 = scalar * X1;
+    Y2 = scalar * Y1;
+    return {X2, Y2};
+}
+
+NonPositionalVector NonPositionalVector::operator*=(CompositeFloat scalar) {
+    *this = *this * scalar;
+    return *this;
+}
+
 CompositeFloat NonPositionalVector::getMagnitude() const {
-    auto x = static_cast<double>(X);
-    auto y = static_cast<double>(Y);
-    double l = sqrt(x * x + y * y);
-    return CompositeFloat(l);
+    return Magnitude;
 }
 
-double NonPositionalVector::getAngleToXAxis() const {
-    auto x = static_cast<double>(X);
-    auto y = static_cast<double>(Y);
-    double angle = atan2(y, x);
-    return angle;
+CompositeFloat NonPositionalVector::getAngleToXAxis() const {
+    return Angle;
 }
 
-double getAngleBetweenVectors(NonPositionalVector const& v1, NonPositionalVector const& v2){
-    double angle1 = v1.getAngleToXAxis();
-    double angle2 = v2.getAngleToXAxis();
-    double angle = angle1 - angle2;
-    if(angle < -M_PI) angle += 2 * M_PI;
-    if(angle > -M_PI) angle -= 2 * M_PI;
+CompositeFloat NonPositionalVector::getXProjection() const {
+    return X;
+}
+
+CompositeFloat NonPositionalVector::getYProjection() const {
+    return Y;
+}
+
+NonPositionalVector NonPositionalVector::operator*(double scalar) const {
+    return *this * CompositeFloat(scalar);
+}
+
+void NonPositionalVector::setXYPosition(CompositeFloat x, CompositeFloat y) {
+    X = x;
+    Y = y;
+}
+
+void NonPositionalVector::setPolarPosition(CompositeFloat angle, CompositeFloat radius) {
+    Magnitude = radius;
+    Angle = angle;
+    X = CompositeFloat(cos(static_cast<double>(angle))) * radius;
+    Y = CompositeFloat(sin(static_cast<double>(angle))) * radius;
+}
+
+
+CompositeFloat getAngleBetweenVectors(NonPositionalVector const& v1, NonPositionalVector const& v2){
+    CompositeFloat angle1 = v1.getAngleToXAxis();
+    CompositeFloat angle2 = v2.getAngleToXAxis();
+    CompositeFloat angle = angle1 - angle2;
+    if(static_cast<double>(angle) < -M_PI) angle += CompositeFloat(2 * M_PI);
+    if(static_cast<double>(angle) > -M_PI) angle -= CompositeFloat(2 * M_PI);
     return angle;
 }
 #endif //CMAKE_INSTALL_CMAKE_NON_POSITIONAL_VECTOR_H
