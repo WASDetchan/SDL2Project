@@ -6,6 +6,7 @@
 #define CMAKE_INSTALL_CMAKE_COMPOSITE_FLOAT_H
 
 #include <cmath>
+#include <iostream>
 
 class CompositeFloat{
 public:
@@ -20,6 +21,8 @@ public:
     CompositeFloat operator-=(CompositeFloat const& other);
     CompositeFloat operator*(CompositeFloat const& other) const;
     CompositeFloat operator*=(CompositeFloat const& other);
+
+    friend std::ostream& operator<<(std::ostream& os, const CompositeFloat& cf);
 
     [[nodiscard]] long long int getWholePart() const;
     [[nodiscard]] double getFraction() const;
@@ -128,6 +131,14 @@ CompositeFloat::CompositeFloat(long long int w, double f) {
     fraction = f;
 }
 
+std::ostream &operator<<(std::ostream &os, const CompositeFloat &cf) {
+    os << static_cast<double>(cf);
+    return os;
+}
+
+CompositeFloat abs(CompositeFloat cf){
+    return {abs(cf.getWholePart()), cf.getFraction()};
+}
 
 
 #endif //CMAKE_INSTALL_CMAKE_COMPOSITE_FLOAT_H
