@@ -5,6 +5,7 @@
 #include <SDL_image.h>
 #include <cstdio>
 #include <iostream>
+#include <cstring>
 #include "Camera.h"
 
 class Sprite{
@@ -18,6 +19,8 @@ public:
     void setTexture(SDL_Texture *texture);
 
     void render();
+
+    std::string name;
 
 protected:
     Camera* _playerCamera;
@@ -48,6 +51,7 @@ protected:
 Sprite::Sprite(Camera* playerCamera) {
     _playerCamera = playerCamera;
     _texture = nullptr;
+    name = "";
     loadTexture(empty);
 }
 
@@ -122,6 +126,7 @@ void Sprite::render() {
     getRotationCentre(centre);
     getRotationAngle(&angle);
     getFlip(&flip);
+
     SDL_RenderCopyEx(_playerCamera->getRenderer(), _texture, sourceRect, destinationRect,
                      static_cast<double>(angle), centre, flip);
     delete sourceRect;
