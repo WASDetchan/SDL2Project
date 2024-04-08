@@ -6,6 +6,9 @@
 #include "TestMapGenerator.h"
 #include "Scene.h"
 #include "Car1.h"
+#include "VectorSprite.h"
+#include "math/CompositeFloat.h"
+#include <iostream>
 
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 720;
@@ -162,19 +165,20 @@ int main(int argc, char *argv[]){
         ACircle2 circle2(playerCamera);
         mainScene.addSprite(&circle2);
         circle2.loadTexture(images[2]);
-        circle2.setWorldPosition(0.3, 0.3);
+        circle2.setWorldPosition(0, 0);
         circle2.setWorldSize(0.2, 0.2);
 
 
         auto circle3 = ACircle2(playerCamera);
         mainScene.addSprite(&circle3);
         circle3.loadTexture(images[2]);
-        circle3.setWorldPosition(0.5, 0.5);
+        circle3.setWorldPosition(0, 0.5);
         circle3.setWorldSize(0.1, 0.1);
 
         WorldSprite* map2;
         gen2(map2, playerCamera);
         mainScene.addSprite(map2);
+        map2->name = "Map";
 
 
         Car1 car(playerCamera);
@@ -184,8 +188,24 @@ int main(int argc, char *argv[]){
         mainScene.addSprite(cart);
         mainScene.followSprite(&car, SMOOTH);
 
+        NonPositionalVector R = NonPositionalVector(CompositeFloat(0.2), CompositeFloat(0.2)), V = NonPositionalVector();
+        long double angle;
 
+        circle3.getRotationAngle(&angle);
+        auto angleCF = CompositeFloat(static_cast<double>(angle));
+        V.setPolarPosition(angleCF, CompositeFloat(0.3));
+        PositionalVector PV(R, V);
+        auto* VS = new VectorSprite(playerCamera, PositionalVector());
+        VS->setVector(PV);
+        VS->name = "VS";
+        mainScene.addSprite(VS);
 
+        V.setPolarPosition(CompositeFloat(0.0), CompositeFloat(0.3));
+        PV = PositionalVector(R, V);
+        auto* VS1 = new VectorSprite(playerCamera, PV);
+        VS1->updatePosition();
+        mainScene.addSprite(VS1);
+        VS1->name = "VS1";
 
         isRunning = true;
         bool wPressed = false, sPressed = false, aPressed = false, dPressed = false, spacePressed = false, nPressed = false;
@@ -207,11 +227,18 @@ int main(int argc, char *argv[]){
                 mainScene.removeSprite(map2);
                 delete map2;
                 gen2(map2, playerCamera);
-                mainScene.addSprite(map2);
+                //mainScene.addSprite(map2);
 
                 mainScene.removeSprite(cart);
                 mainScene.addSprite(cart);
             }
+
+            circle3.getRotationAngle(&angle);
+            angleCF = CompositeFloat(M_PI * static_cast<double>(angle) / 180.0);
+            V.setPolarPosition(angleCF, CompositeFloat(0.3));
+            PV = PositionalVector(R, V);
+            VS->setVector(PV);
+            VS->updatePosition();
 
             car.getWorldPosition(&X, &Y);
 
