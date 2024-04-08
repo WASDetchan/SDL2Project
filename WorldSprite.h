@@ -31,6 +31,7 @@ protected:
 };
 
 WorldSprite::WorldSprite(Camera *playerCamera) : Sprite(playerCamera) {
+    name = "World Sprite";
     _worldCenterX = 0;
     _worldCenterY = 0;
     _worldRotationCentreX = 0;
