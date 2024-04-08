@@ -15,8 +15,10 @@ public:
     explicit operator NonPositionalVector() const;
     PositionalVector operator+(NonPositionalVector other) const;
 
-    NonPositionalVector getInitialRadiusVector();
-    NonPositionalVector getTerminalRadiusVector();
+    [[nodiscard]] NonPositionalVector getInitialRadiusVector() const;
+    [[nodiscard]] NonPositionalVector getTerminalRadiusVector() const;
+    [[nodiscard]] NonPositionalVector getNonPositionalVector() const;
+
 private:
     NonPositionalVector R, V;
 };
@@ -35,12 +37,16 @@ PositionalVector::operator NonPositionalVector() const {
     return V;
 }
 
-NonPositionalVector PositionalVector::getInitialRadiusVector() {
+NonPositionalVector PositionalVector::getInitialRadiusVector() const{
     return R;
 }
 
-NonPositionalVector PositionalVector::getTerminalRadiusVector() {
+NonPositionalVector PositionalVector::getTerminalRadiusVector() const{
     return R + V;
+}
+
+NonPositionalVector PositionalVector::getNonPositionalVector() const {
+    return static_cast<NonPositionalVector>(*this);
 }
 
 PositionalVector PositionalVector::operator+(NonPositionalVector other) const {
@@ -48,5 +54,7 @@ PositionalVector PositionalVector::operator+(NonPositionalVector other) const {
     v3 = v1 + v2;
     return {R, v3};
 }
+
+
 
 #endif //CMAKE_INSTALL_CMAKE_POSITIONAL_VECTOR_H
