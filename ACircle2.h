@@ -9,6 +9,7 @@ const double TEXTURE_CHANGE_SPEED = 0.01;
 class ACircle2 : public WorldSprite{
 public:
     explicit ACircle2(Camera *playerCamera);
+    void getRotationAngle(long double *angle) override;
 private:
 
     SDL_Point *_centre;
@@ -19,7 +20,7 @@ private:
 
     void getSourceRect(SDL_Rect *&sourceRect) override;
 
-    void getRotationAngle(long double *angle) override;
+
 };
 
 void ACircle2::getColorMod(unsigned char *red, unsigned char *green, unsigned char *blue) {
@@ -61,6 +62,7 @@ void ACircle2::getSourceRect(SDL_Rect *&sourceRect) {
 }
 
 ACircle2::ACircle2(Camera *playerCamera) : WorldSprite(playerCamera) {
+    name = "A Circle 2";
     _centre = nullptr;
 }
 
