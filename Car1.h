@@ -29,6 +29,7 @@ private:
 };
 
 Car1::Car1(Camera *playerCamera) : WorldSprite(playerCamera) {
+    name = "Car";
     _speed = 0;
     _acceleration = 0;
     _angle = 0;
