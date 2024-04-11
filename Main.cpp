@@ -9,11 +9,12 @@
 #include "VectorSprite.h"
 #include "math/CompositeFloat.h"
 #include <iostream>
+#include "something.h"
 
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 720;
 const int IMG_FLAGS = IMG_INIT_PNG;
-const int RENDERER_FLAGS = 0 | SDL_RENDERER_ACCELERATED  | SDL_RENDERER_PRESENTVSYNC;
+const int RENDERER_FLAGS = 0 | SDL_RENDERER_ACCELERATED/*  | SDL_RENDERER_PRESENTVSYNC*/;
 
 const std::vector<const char*> images = {
         "images/ACircle.png",
@@ -22,127 +23,6 @@ const std::vector<const char*> images = {
         "images/car11.png"
 };
 
-const long double CAMERA_SPEED = 0.001, SEED = 0.586456314595763551975, WHEEL_SENSITIVITY = 1;
-
-WorldSprite gen1(Camera* playerCamera){
-    auto seed = SEED;
-    seed *= 53498874654978542231684477.0L;
-    seed /= 54978542231684316847.0L;
-    seed -= static_cast<uint64_t>(seed);
-
-    TestMapGenerator generator = TestMapGenerator(playerCamera, seed);
-    SDL_Texture* mapTexture;
-    generator.generateMap(mapTexture, 100, 100);
-    WorldSprite map = WorldSprite(playerCamera);
-    map.setTexture(mapTexture);
-    map.setWorldPosition(0.5, 0.8);
-    map.setWorldSize(0.5, 0.5);
-
-    return map;
-}
-
-void gen2(WorldSprite* &map, Camera* playerCamera){
-    static auto seed = SEED;
-    seed *= 14287547854223;
-    seed /= 778472857548;
-    seed -= static_cast<uint64_t>(seed);
-
-    TestMapGenerator generator = TestMapGenerator(playerCamera, seed);
-    SDL_Texture* mapTexture;
-    generator.generateMap(mapTexture, 1000, 1000);
-    map = new WorldSprite(playerCamera);
-    map->setTexture(mapTexture);
-    map->setWorldPosition(1.0000000000, 0.80000000);
-    map->setWorldSize(25.00000000000, 25.00000000);
-}
-
-[[maybe_unused]] void moveCamera(Camera* playerCamera, bool wPressed, bool sPressed, bool aPressed, bool dPressed){
-    int64_t cameraMoveMultiplierX, cameraMoveMultiplierY;
-    long double deltaX, deltaY;
-
-    cameraMoveMultiplierX = static_cast<int64_t>(dPressed) - static_cast<int64_t>(aPressed);
-    cameraMoveMultiplierY = static_cast<int64_t>(sPressed) - static_cast<int64_t>(wPressed);
-    deltaX = static_cast<long double>(playerCamera->getFrameTime() - playerCamera->getPreviousFrameTime()) *
-             CAMERA_SPEED * cameraMoveMultiplierX / playerCamera->getZoom();
-    deltaY = static_cast<long double>(playerCamera->getFrameTime() - playerCamera->getPreviousFrameTime()) *
-             CAMERA_SPEED * cameraMoveMultiplierY / playerCamera->getZoom();
-
-    playerCamera->moveX(deltaX);
-    playerCamera->moveY(deltaY);
-}
-
-void eventCheck(Camera* playerCamera, bool &isRunning, bool &wPressed, bool &sPressed, bool &aPressed, bool &dPressed, bool &spacePressed, bool &nPressed){
-    static SDL_Event event;
-
-    while(SDL_PollEvent(&event)){
-        if(event.type == SDL_QUIT) {
-            isRunning = false;
-        }
-        if(event.type == SDL_KEYDOWN){
-            switch (event.key.keysym.sym){
-                case SDLK_w:
-                    wPressed = true;
-                    break;
-                case SDLK_s:
-                    sPressed = true;
-                    break;
-                case SDLK_a:
-                    aPressed = true;
-                    break;
-                case SDLK_d:
-                    dPressed = true;
-                    break;
-                case SDLK_SPACE:
-                    spacePressed = true;
-                    break;
-                case SDLK_n:
-                    nPressed = true;
-                    break;
-                case SDLK_ESCAPE:
-                    isRunning = false;
-                    break;
-            }
-        }
-        if(event.type == SDL_KEYUP){
-            switch (event.key.keysym.sym){
-                case SDLK_w:
-                    wPressed = false;
-                    break;
-                case SDLK_s:
-                    sPressed = false;
-                    break;
-                case SDLK_a:
-                    aPressed = false;
-                    break;
-                case SDLK_d:
-                    dPressed = false;
-                    break;
-                case SDLK_SPACE:
-                    spacePressed = false;
-                    break;
-            }
-        }
-        if(event.type == SDL_MOUSEWHEEL){
-            int32_t y = event.wheel.y;
-            playerCamera->changeZoom(y * WHEEL_SENSITIVITY);
-        }
-    }
-}
-
-void accelerateCar(Car1 &car, bool wPressed, bool sPressed, bool aPressed, bool dPressed, bool spacePressed) {
-    if(sPressed) car.setAcceleration(-1);
-    if(wPressed) car.setAcceleration(1);
-    if(sPressed && wPressed) car.setAcceleration(0);
-    if(!sPressed && !wPressed) car.setAcceleration(0);
-
-    car.turnLeft(false);
-    car.turnRight(false);
-
-    if(aPressed) car.turnLeft(true);
-    if(dPressed) car.turnRight(true);
-
-    car.brake(spacePressed);
-}
 
 int main(int argc, char *argv[]){
     bool isRunning;
@@ -201,11 +81,17 @@ int main(int argc, char *argv[]){
         mainScene.addSprite(VS);
 
         V.setPolarPosition(CompositeFloat(0.0), CompositeFloat(0.3));
-        PV = PositionalVector(R, V);
-        auto* VS1 = new VectorSprite(playerCamera, PV);
+        auto PV1 = PositionalVector(NonPositionalVector(), R);
+        auto* VS1 = new VectorSprite(playerCamera, PV1);
         VS1->updatePosition();
         mainScene.addSprite(VS1);
         VS1->name = "VS1";
+
+        auto PV3 = PositionalVector(NonPositionalVector(), R + V);
+        auto* VS3 = new VectorSprite(playerCamera, PV3);
+        VS3->updatePosition();
+        mainScene.addSprite(VS3);
+        VS3->name = "VS3";
 
         isRunning = true;
         bool wPressed = false, sPressed = false, aPressed = false, dPressed = false, spacePressed = false, nPressed = false;
@@ -233,12 +119,27 @@ int main(int argc, char *argv[]){
                 mainScene.addSprite(cart);
             }
 
+            auto worldMouseX = (double)playerCamera->calculateWorldPositionX(mouseX / playerCamera->getPixelsPerUnit());
+            auto worldMouseY = (double)playerCamera->calculateWorldPositionY(mouseY / playerCamera->getPixelsPerUnit());
+
+            R.setXYPosition(CompositeFloat(worldMouseX), CompositeFloat(worldMouseY));
+
             circle3.getRotationAngle(&angle);
             angleCF = CompositeFloat(M_PI * static_cast<double>(angle) / 180.0);
             V.setPolarPosition(angleCF, CompositeFloat(0.3));
             PV = PositionalVector(R, V);
             VS->setVector(PV);
             VS->updatePosition();
+
+            PV1 = PositionalVector(NonPositionalVector(CompositeFloat(0.0), CompositeFloat(0.0)), R);
+            VS1->setVector(PV1);
+            VS1->updatePosition();
+
+            auto PNPV = R * V;
+
+            PV3 = PositionalVector(NonPositionalVector(CompositeFloat(0.0), PNPV.getMagnitude()));
+            VS3->setVector(PV3);
+            VS3->updatePosition();
 
             car.getWorldPosition(&X, &Y);
 
