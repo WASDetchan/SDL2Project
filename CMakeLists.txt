@@ -20,6 +20,7 @@ add_executable(SDL2Test Main.cpp Main.cpp Init.h AnimatedTexture.h Particles.h S
         math/PositionalVector.h
         math/PseudoNonPositionalVector.h
         VectorSprite.h
+        something.h
 )
 target_link_libraries(SDL2Test ${SDL2_LIBRARIES})
 target_link_libraries(SDL2Test SDL2_image::SDL2_image)
