@@ -110,6 +110,12 @@ NonPositionalVector NonPositionalVector::operator*(double scalar) const {
 void NonPositionalVector::setXYPosition(CompositeFloat x, CompositeFloat y) {
     X = x;
     Y = y;
+
+    auto xd = static_cast<double>(X);
+    auto yd = static_cast<double>(Y);
+    double l = sqrt(xd * xd + yd * yd);
+    Magnitude =  CompositeFloat(l);
+    Angle = CompositeFloat(atan2(yd, xd));
 }
 
 void NonPositionalVector::setPolarPosition(CompositeFloat angle, CompositeFloat radius) {
