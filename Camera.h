@@ -50,8 +50,10 @@ public:
     [[nodiscard]] long double getScreenMultiplierY() const;
 
     [[nodiscard]] long double calculateScreenPositionX(long double worldPositionX) const;
+    [[nodiscard]] long double calculateWorldPositionX(long double screenPositionX) const;
 
     [[nodiscard]] long double calculateScreenPositionY(long double worldPositionY) const;
+    [[nodiscard]] long double calculateWorldPositionY(long double screenPositionY) const;
 
     [[nodiscard]] uint64_t getFrameTime() const;
 
@@ -193,9 +195,15 @@ long double Camera::getScreenMultiplierY() const {
 long double Camera::calculateScreenPositionX(long double worldPositionX) const {
     return (worldPositionX - getCentreX())  * getZoom() + 0.5 * getScreenMultiplierX();
 }
+long double Camera::calculateWorldPositionX(long double screenPositionX) const {
+    return (screenPositionX - 0.5 * getScreenMultiplierX()) / getZoom() + getCentreX();
+}
 
 long double Camera::calculateScreenPositionY(long double worldPositionY) const {
     return (worldPositionY - getCentreY())  * getZoom() + 0.5 * getScreenMultiplierY();
+}
+long double Camera::calculateWorldPositionY(long double screenPositionY) const {
+    return (screenPositionY - 0.5 * getScreenMultiplierY()) / getZoom() + getCentreY();
 }
 
 uint64_t Camera::getFrameTime() const {
