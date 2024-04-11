@@ -10,6 +10,7 @@
 class PositionalVector{
 public:
     PositionalVector();
+    explicit PositionalVector(NonPositionalVector v);
     PositionalVector(NonPositionalVector r, NonPositionalVector v);
 
     explicit operator NonPositionalVector() const;
@@ -26,6 +27,11 @@ private:
 PositionalVector::PositionalVector() {
     R = NonPositionalVector();
     V = NonPositionalVector();
+}
+
+PositionalVector::PositionalVector(NonPositionalVector v) {
+    R = NonPositionalVector();
+    V = v;
 }
 
 PositionalVector::PositionalVector(NonPositionalVector r, NonPositionalVector v) {
@@ -54,6 +60,7 @@ PositionalVector PositionalVector::operator+(NonPositionalVector other) const {
     v3 = v1 + v2;
     return {R, v3};
 }
+
 
 
 
