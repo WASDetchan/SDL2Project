@@ -11,6 +11,8 @@ class PseudoNonPositionalVector{
 public:
     PseudoNonPositionalVector();
     explicit PseudoNonPositionalVector(CompositeFloat v);
+
+    CompositeFloat getMagnitude();
 private:
     CompositeFloat V;
 };
@@ -21,6 +23,10 @@ PseudoNonPositionalVector::PseudoNonPositionalVector() {
 
 PseudoNonPositionalVector::PseudoNonPositionalVector(CompositeFloat v) {
     V = v;
+}
+
+CompositeFloat PseudoNonPositionalVector::getMagnitude() {
+    return V;
 }
 
 #endif //CMAKE_INSTALL_CMAKE_PSEUDO_NON_POSITIONAL_VECTOR_H
