@@ -2,25 +2,32 @@ cmake_minimum_required(VERSION 3.7)
 
 project(SDL2Test)
 
-set(SDL2_DIR "./SDL2/SDL2/cmake")
-set(SDL2_image_DIR "./SDL2/SDL2_image/cmake")
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 
-add_executable(SDL2Test Main.cpp Main.cpp Init.h AnimatedTexture.h Particles.h Sprite.h TestHeader.h
-        Camera.h
-        WorldSprite.h
-        ACircle2.h
-        TestMapGenerator.h
-        Scene.h
-        Car1.h
-        math/CompositeFloat.h
-        math/NonPositionalVector.h
-        math/PositionalVector.h
-        math/PseudoNonPositionalVector.h
-        VectorSprite.h
-        something.h
+add_executable(
+        
+SDL2Test
+src/Main.cpp 
+src/engine/Init.h 
+src/AnimatedTexture.h 
+src/Particles.h 
+src/engine/Sprite.h 
+src/TestHeader.h
+src/engine/Camera.h
+src/engine/WorldSprite.h
+src/ACircle2.h
+src/TestMapGenerator.h
+src/engine/Scene.h
+src/Car1.h
+src/engine/math/CompositeFloat.h
+src/engine/math/NonPositionalVector.h
+src/engine/math/PositionalVector.h
+src/engine/math/PseudoNonPositionalVector.h
+src/engine/VectorSprite.h
+src/something.h
 )
+
 target_link_libraries(SDL2Test ${SDL2_LIBRARIES})
 target_link_libraries(SDL2Test SDL2_image::SDL2_image)

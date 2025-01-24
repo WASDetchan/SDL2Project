@@ -1,0 +1,3 @@
+/home/yaroslav/SDL2Project/CMakeFiles/SDL2Test.dir
+/home/yaroslav/SDL2Project/CMakeFiles/edit_cache.dir
+/home/yaroslav/SDL2Project/CMakeFiles/rebuild_cache.dir
