@@ -20,7 +20,7 @@ const std::vector<const char*> images = {
         "images/ACircle.png",
         "images/ACircle2.png",
         "images/ACircle3.png",
-        "images/car11.png"
+        "images/car2.png"
 };
 
 
@@ -66,7 +66,7 @@ int main(int argc, char *argv[]){
         car.setWorldSize(0.4, 0.2);
         auto cart = &car;
         mainScene.addSprite(cart);
-        mainScene.followSprite(&car, SMOOTH);
+        mainScene.followSprite(&car, INSTANT);
 
         NonPositionalVector R = NonPositionalVector(CompositeFloat(0.2), CompositeFloat(0.2)), V = NonPositionalVector();
         long double angle;
@@ -96,6 +96,7 @@ int main(int argc, char *argv[]){
         isRunning = true;
         bool wPressed = false, sPressed = false, aPressed = false, dPressed = false, spacePressed = false, nPressed = false;
 
+        long long frameCounter = 0;
 
         while(isRunning) {
             playerCamera->updateFrameTime(SDL_GetTicks64());
@@ -147,7 +148,7 @@ int main(int argc, char *argv[]){
 
             SDL_RenderPresent(renderer);
 
-            eventCheck(playerCamera, isRunning, wPressed, sPressed, aPressed, dPressed, spacePressed, nPressed);
+            eventCheck(playerCamera, isRunning, wPressed, sPressed, aPressed, dPressed, spacePressed, nPressed);           
         }
     }
 
