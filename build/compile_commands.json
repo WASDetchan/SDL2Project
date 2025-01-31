@@ -1,8 +1,0 @@
-[
-{
-  "directory": "/home/yaroslav/SDL2Project/build",
-  "command": "/usr/bin/g++ -isystem /usr/include/SDL2 -g -o CMakeFiles/SDL2Test.dir/src/Main.cpp.o -c /home/yaroslav/SDL2Project/src/Main.cpp",
-  "file": "/home/yaroslav/SDL2Project/src/Main.cpp",
-  "output": "CMakeFiles/SDL2Test.dir/src/Main.cpp.o"
-}
-]
